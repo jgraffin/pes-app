@@ -14,9 +14,11 @@ import {
   IonItem,
   IonList,
   IonModal,
+  IonSelect,
+  IonSelectOption,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { addCircleOutline } from 'ionicons/icons';
+import { addCircleOutline, airplane, archive } from 'ionicons/icons';
 
 @Component({
   selector: 'modal',
@@ -32,6 +34,8 @@ import { addCircleOutline } from 'ionicons/icons';
     IonList,
     IonItem,
     IonInput,
+    IonSelect,
+    IonSelectOption,
     ReactiveFormsModule,
   ],
 })
@@ -49,6 +53,12 @@ export class ModalComponent implements OnInit {
     addIcons({
       'add-circle-outline': addCircleOutline,
     });
+    addIcons({
+      archive: archive,
+    });
+    addIcons({
+      airplane: airplane,
+    });
   }
 
   ngOnInit() {
@@ -58,6 +68,7 @@ export class ModalComponent implements OnInit {
   initializeForm() {
     this.formData = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
+      team: ['', [Validators.required]],
     });
   }
 
