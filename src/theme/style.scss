@@ -1,0 +1,34 @@
+html,
+body {
+  @apply bg-dark-blue;
+}
+
+ion-content {
+  --background: var(--ion-color-primary);
+}
+
+ion-toolbar {
+  --background: transparent;
+}
+
+ion-modal ion-content {
+  --background: var(--ion-color-light);
+}
+
+@font-face {
+  font-family: "DIN Alternate";
+  src: url("../assets/fonts/DINAlternate-Bold.woff2") format("woff2"),
+    url("../assets/fonts/DINAlternate-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DIN";
+  src: url("../assets/fonts/DIN-Bold.woff2") format("woff2"),
+    url("../assets/fonts/DIN-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}

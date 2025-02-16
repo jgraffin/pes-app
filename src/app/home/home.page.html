@@ -1,20 +1,260 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<modal *ngIf="isModalLoaded"></modal>
+
+<ion-header class="ion-no-border h-24">
+  <ion-toolbar class="ion-no-border">
+    <div class="animate-top-to-bottom flex justify-start w-full -translate-x-1">
+      <svg
+        width="189"
+        height="107.91"
+        viewBox="0 0 289 165"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g id="Mask group">
+          <mask
+            id="mask0_2_13"
+            style="mask-type: alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="289"
+            height="165"
+          >
+            <rect id="Rectangle 1" width="289" height="165" fill="#D9D9D9" />
+          </mask>
+          <g mask="url(#mask0_2_13)">
+            <g id="Group 1">
+              <path
+                id="Vector 6"
+                d="M-114 36.467L-95.868 -8.00464C-26.1092 -4.53618 -21.324 -9.4674 1.44679 -17.1163C33.1238 -22.192 110.128 -32.0753 85.7532 -6.08455C61.3782 19.9062 -45.9526 32.8312 -114 36.467Z"
+                fill="url(#paint0_linear_2_13)"
+              />
+              <path
+                id="Vector 2"
+                d="M139.345 -21.5171C104.277 -0.810306 54.6337 31.3099 34.2421 35.2325C15.3403 55.249 -46.3099 73.6404 -17.2579 69.2326C11.7941 64.8248 62.7421 62.7326 138.427 3.92464L166.807 1.37392C172.264 -14.8842 174.413 -42.2238 139.345 -21.5171Z"
+                fill="url(#paint1_linear_2_13)"
+              />
+              <path
+                id="Vector 1"
+                d="M58.4168 -3.88545C40.8168 12.9146 9.58349 26.6146 -3.08318 32.6146C-9.91651 45.7812 -21.4832 73.1146 -3.08317 65.1146C15.3168 57.1146 55.9168 21.6146 65.4168 8.11456L83.9168 1.11455C82.7502 -7.55211 76.0168 -20.6854 58.4168 -3.88545Z"
+                fill="url(#paint2_linear_2_13)"
+              />
+              <path
+                id="Vector 4"
+                d="M110 71.9651L118.5 22.4999C186.85 10.1119 190.482 3.99361 211 -8.99999C240.679 -21.4038 313.327 -49.0541 295 -17C276.673 15.0541 175.239 52.7269 110 71.9651Z"
+                fill="url(#paint3_linear_2_13)"
+              />
+              <path
+                id="Vector 5"
+                d="M-52.7914 191.733L-54.3106 143.731C10.8305 118.533 13.1968 112.082 30.8895 95.8342C57.7651 78.3157 124.096 37.9729 112.397 71.6296C100.697 105.286 7.8972 160.74 -52.7914 191.733Z"
+                fill="url(#paint4_linear_2_13)"
+              />
+              <path
+                id="Vector 3"
+                d="M-5.50002 125.5L-2.1554 67.2127C65.2713 50.5164 124.847 13.2682 144.5 -1.00004C173.333 -15.2605 223.52 -30.9557 207.261 2.1958C191.003 35.3473 58.3884 102.165 -5.50002 125.5Z"
+                fill="url(#paint5_linear_2_13)"
+              />
+            </g>
+          </g>
+        </g>
+        <defs>
+          <linearGradient
+            id="paint0_linear_2_13"
+            x1="33.0131"
+            y1="-66.9966"
+            x2="-10.9235"
+            y2="60.0771"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#73055B" />
+            <stop offset="0.687272" stop-color="#220D34" />
+          </linearGradient>
+          <linearGradient
+            id="paint1_linear_2_13"
+            x1="117.495"
+            y1="-48.6394"
+            x2="54.9894"
+            y2="92.9702"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#5A0445" />
+            <stop offset="1" stop-color="#3F0854" />
+          </linearGradient>
+          <linearGradient
+            id="paint2_linear_2_13"
+            x1="35.4584"
+            y1="-12"
+            x2="35.4584"
+            y2="66.5551"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#3F0854" />
+            <stop offset="1" stop-color="#77055B" />
+          </linearGradient>
+          <linearGradient
+            id="paint3_linear_2_13"
+            x1="231.422"
+            y1="-67.0443"
+            x2="214.769"
+            y2="72.5006"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#73055B" />
+            <stop offset="0.99" stop-color="#2C0438" />
+          </linearGradient>
+          <linearGradient
+            id="paint4_linear_2_13"
+            x1="39.4443"
+            y1="37.4279"
+            x2="50.9787"
+            y2="171.387"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#73055B" />
+            <stop offset="0.687272" stop-color="#220D34" />
+          </linearGradient>
+          <linearGradient
+            id="paint5_linear_2_13"
+            x1="106.865"
+            y1="-20.9275"
+            x2="99.0922"
+            y2="119.392"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0.01" stop-color="#430855" />
+            <stop offset="1" stop-color="#73055B" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+<ion-content [fullscreen]="true" class="animate-bottom-to-top"> </ion-content>
+<ion-footer class="h-36 ion-no-border">
+  <ion-toolbar class="ion-no-border">
+    <div class="animate-bottom-to-top flex justify-end w-full translate-x-2">
+      <div class="flex w-80 -translate-y-5 justify-end">
+        <svg
+          width="255"
+          height="155.3"
+          viewBox="0 0 393 243"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <mask
+            id="mask0_3_14"
+            style="mask-type: alpha"
+            maskUnits="userSpaceOnUse"
+            x="-6"
+            y="0"
+            width="399"
+            height="243"
+          >
+            <rect
+              x="393"
+              y="243"
+              width="399"
+              height="243"
+              transform="rotate(180 393 243)"
+              fill="#D9D9D9"
+            />
+          </mask>
+          <g mask="url(#mask0_3_14)">
+            <path
+              d="M550.391 189.294L525.358 254.789C429.047 249.681 422.44 256.943 391.003 268.208C347.269 275.683 240.955 290.238 274.607 251.961C308.26 213.684 456.443 194.649 550.391 189.294Z"
+              fill="url(#paint0_linear_3_14)"
+            />
+            <path
+              d="M200.617 274.689C249.032 244.193 317.571 196.889 345.725 191.112C371.821 161.633 456.936 134.548 416.827 141.039C376.717 147.531 306.377 150.612 201.884 237.22L162.703 240.977C155.168 264.92 152.202 305.184 200.617 274.689Z"
+              fill="url(#paint1_linear_3_14)"
+            />
+            <path
+              d="M287.307 266.369C322.719 231.937 385.561 203.859 411.047 191.562C424.796 164.576 448.068 108.556 411.047 124.952C374.026 141.349 262.114 210.332 243 238L236 256.121C238.347 273.884 251.895 300.801 287.307 266.369Z"
+              fill="url(#paint2_linear_3_14)"
+            />
+            <path
+              d="M246.131 147.015L246.131 203C151.767 221.244 135.016 247.119 106.689 266.255C65.7131 284.522 -34.5871 325.243 -9.28378 278.036C16.0195 230.829 156.061 175.348 246.131 147.015Z"
+              fill="url(#paint3_linear_3_14)"
+            />
+            <path
+              d="M465.885 -26.3708L467.982 44.323C378.047 81.4336 374.78 90.9341 350.353 114.862C313.248 140.662 221.67 200.076 237.823 150.509C253.975 100.942 382.097 19.2734 465.885 -26.3708Z"
+              fill="url(#paint4_linear_3_14)"
+            />
+            <path
+              d="M400.593 58.1727L395.976 144.014C302.885 168.603 220.633 223.46 193.5 244.473C153.693 265.475 84.4037 288.589 106.85 239.766C129.297 190.943 312.388 92.5395 400.593 58.1727Z"
+              fill="url(#paint5_linear_3_14)"
+            />
+          </g>
+          <defs>
+            <linearGradient
+              id="paint0_linear_3_14"
+              x1="347.421"
+              y1="341.668"
+              x2="415.443"
+              y2="157.238"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#73055B" />
+              <stop offset="0.687272" stop-color="#220D34" />
+            </linearGradient>
+            <linearGradient
+              id="paint1_linear_3_14"
+              x1="230.784"
+              y1="314.633"
+              x2="326.819"
+              y2="110.666"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#5A0445" />
+              <stop offset="1" stop-color="#3F0854" />
+            </linearGradient>
+            <linearGradient
+              id="paint2_linear_3_14"
+              x1="333.5"
+              y1="283"
+              x2="333.5"
+              y2="122"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#3F0854" />
+              <stop offset="1" stop-color="#77055B" />
+            </linearGradient>
+            <linearGradient
+              id="paint3_linear_3_14"
+              x1="78.4935"
+              y1="351.738"
+              x2="104.604"
+              y2="146.623"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#73055B" />
+              <stop offset="0.99" stop-color="#2C0438" />
+            </linearGradient>
+            <linearGradient
+              id="paint4_linear_3_14"
+              x1="338.542"
+              y1="200.879"
+              x2="320.44"
+              y2="3.79331"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#73055B" />
+              <stop offset="0.687272" stop-color="#220D34" />
+            </linearGradient>
+            <linearGradient
+              id="paint5_linear_3_14"
+              x1="245.46"
+              y1="273.82"
+              x2="402.69"
+              y2="37.1223"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0.241013" stop-color="#430855" />
+              <stop offset="1" stop-color="#73055B" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>
