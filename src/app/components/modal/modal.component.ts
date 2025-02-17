@@ -18,7 +18,7 @@ import {
   IonSelectOption,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { addCircleOutline, airplane, archive } from 'ionicons/icons';
+import { addCircleOutline, airplane, archive, close } from 'ionicons/icons';
 
 @Component({
   selector: 'modal',
@@ -55,9 +55,8 @@ export class ModalComponent implements OnInit {
     });
     addIcons({
       archive: archive,
-    });
-    addIcons({
       airplane: airplane,
+      close: close,
     });
   }
 

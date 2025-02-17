@@ -1,5 +1,6 @@
 :host {
   ion-content {
-    --background: var(--ion-background-image) no-repeat bottom right / 80% fixed;
+    --background: var(--ion-background-image) no-repeat bottom right / contain
+      fixed;
   }
 }

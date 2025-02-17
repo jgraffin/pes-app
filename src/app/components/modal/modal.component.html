@@ -18,23 +18,34 @@
   #modal
   trigger="open-modal"
   class="ion-modal-custom"
-  [initialBreakpoint]="0.75"
-  [breakpoints]="[0, 0.25, 0.5, 0.75]"
+  [initialBreakpoint]="0.6"
+  [breakpoints]="[0, 0.25, 0.5, 0.6]"
+  [backdropDismiss]="false"
   (willDismiss)="onModalDismiss()"
 >
   <ng-template>
     <ion-content>
-      <h2>{{ formTitle }}</h2>
+      <h2
+        class="px-6 pt-8 pb-4 flex w-full font-extrabold text-[23px] text-[#4F378B]"
+      >
+        {{ formTitle }}
+      </h2>
+      <button (click)="closeModal()" class="absolute top-4 right-4" ion-button>
+        <ion-icon class="text-2xl text-[#4F378B]" name="close"></ion-icon>
+      </button>
       <form [formGroup]="formData" (ngSubmit)="onSubmit()">
-        <ion-list>
+        <ion-list class="px-6">
           <ion-item>
             <ion-input
               label="Nome"
               labelPlacement="floating"
               formControlName="name"
+              autocomplete="address-line1"
+              class="font-alternate"
             ></ion-input>
           </ion-item>
           <p
+            class="text-red-700 text-sm my-2 font-bold"
             *ngIf="
               formData.get('name')?.invalid && formData.get('name')?.touched
             "
@@ -42,26 +53,56 @@
             Campo obrigatório e deve ter pelo menos 3 caracteres.
           </p>
           <ion-item>
-            <ion-select label="Time" label-placement="floating">
-              <ion-select-option value="apple">
-                <ion-icon name="airplane"></ion-icon>
-                Apple</ion-select-option
+            <ion-select
+              label="Selecione o time"
+              label-placement="floating"
+              formControlName="team"
+              class="font-alternate"
+            >
+              <ion-select-option id="psg" value="Paris Saint German"
+                >Paris Saint German</ion-select-option
               >
-              <ion-select-option value="banana">
-                <ion-icon name="archive"></ion-icon>
-                Banana</ion-select-option
+              <ion-select-option id="real-madrid" value="Real Madrid">
+                Real Madrid</ion-select-option
               >
-              <ion-select-option value="orange">
-                <ion-icon name="archive"></ion-icon>
-                Orange</ion-select-option
+              <ion-select-option value="Barcelona">
+                Barcelona</ion-select-option
               >
+              <ion-select-option value="Manchester City">
+                Manchester City</ion-select-option
+              >
+              <ion-select-option value="Juventus"> Juventus</ion-select-option>
+              <ion-select-option value="Ajax"> Ajax</ion-select-option>
+              <ion-select-option value="Chelsea"> Chelsea</ion-select-option>
+              <ion-select-option value="Liverpool">
+                Liverpool</ion-select-option
+              >
+              <ion-select-option value="Real Betis">
+                Real Betis</ion-select-option
+              >
+              <ion-select-option value="Atletico Madrid">
+                Atletico Madrid</ion-select-option
+              >
+              <ion-select-option value="Bayern Munich">
+                Bayern Munich</ion-select-option
+              >
+              <ion-select-option value="Manchester United">
+                Manchester United</ion-select-option
+              >
+              <ion-select-option value="Arsenal"> Arsenal</ion-select-option>
+              <ion-select-option value="Inter Milan">
+                Inter Milan</ion-select-option
+              >
+              <ion-select-option value="Napoli"> Napoli</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-list>
 
-        <ion-button expand="full" color="primary" shape="round" type="submit"
-          >Adicionar</ion-button
-        >
+        <div class="flex w-full px-6 justify-end py-4">
+          <ion-button color="secondary" shape="round" type="submit"
+            >Adicionar</ion-button
+          >
+        </div>
       </form>
     </ion-content>
   </ng-template>

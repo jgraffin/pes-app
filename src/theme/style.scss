@@ -12,7 +12,25 @@ ion-toolbar {
 }
 
 ion-modal ion-content {
-  --background: var(--ion-color-light);
+  --background: #ffffff;
+}
+
+ion-item {
+  --padding-end: 0px;
+  --inner-padding-end: 0px;
+  --padding-start: 0px;
+  --inner-padding-start: 0px;
+
+  &.ion-invalid.ion-touched {
+    --border-color: var(--ion-color-danger);
+  }
+}
+
+.select-interface-option .alert-radio-label {
+  &::before {
+    content: "";
+    @apply w-8 h-8 rounded-full bg-dark-blue align-middle inline-block m-1;
+  }
 }
 
 @font-face {
