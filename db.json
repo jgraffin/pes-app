@@ -1,0 +1,20 @@
+{
+    "teams": [
+        {
+            "id": "psg",
+            "name": "Paris Saint German"
+        },
+        {
+            "id": "real-madrid",
+            "name": "Real Madrid"
+        },
+        {
+            "id": "barcelona",
+            "name": "Barcelona"
+        },
+        {
+            "id": "man-city",
+            "name": "Manchester City"
+        }
+    ]
+}

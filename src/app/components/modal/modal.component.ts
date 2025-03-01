@@ -1,5 +1,5 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { JsonPipe, NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, Signal, signal, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,9 +8,7 @@ import {
 } from '@angular/forms';
 import {
   IonButton,
-  IonButtons,
   IonContent,
-  IonHeader,
   IonIcon,
   IonInput,
   IonItem,
@@ -18,11 +16,11 @@ import {
   IonList,
   IonModal,
   IonText,
-  IonTitle,
-  IonToolbar,
+  IonThumbnail,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addCircleOutline, airplane, archive, close } from 'ionicons/icons';
+import { Team, TeamsService } from 'src/app/services/teams.service';
 
 @Component({
   selector: 'modal',
@@ -32,10 +30,7 @@ import { addCircleOutline, airplane, archive, close } from 'ionicons/icons';
   imports: [
     NgIf,
     NgFor,
-    IonButtons,
-    IonTitle,
-    IonToolbar,
-    IonHeader,
+    IonThumbnail,
     IonButton,
     IonIcon,
     IonContent,
@@ -46,6 +41,7 @@ import { addCircleOutline, airplane, archive, close } from 'ionicons/icons';
     IonLabel,
     IonText,
     ReactiveFormsModule,
+    JsonPipe,
   ],
 })
 export class ModalComponent implements OnInit {
@@ -58,9 +54,10 @@ export class ModalComponent implements OnInit {
   formTitle = 'Adicionar jogador';
 
   formData!: FormGroup;
-  teams: Array<{ id: string; name: string }> = [];
+  teams = signal<Team[]>([]);
+  shield!: any;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private teamsService: TeamsService) {
     addIcons({
       'add-circle-outline': addCircleOutline,
     });
@@ -84,12 +81,21 @@ export class ModalComponent implements OnInit {
   }
 
   loadTeams() {
-    this.teams = [
-      { id: 'psg', name: 'Paris Saint German' },
-      { id: 'real-madrid', name: 'Real Madrid' },
-      { id: 'barcelona', name: 'Barcelona' },
-      { id: 'man-city', name: 'Manchester City' },
-    ];
+    this.teamsService.getTeams().subscribe((teams) => {
+      this.teams.set(teams);
+    });
+  }
+
+  getTeamImagePath(item: Team): Signal<string> {
+    const defaultImage = 'assets/icon/favicon.png';
+    const imagePath = `assets/shield/${item.id}.png`;
+
+    const img = new Image();
+    img.src = imagePath;
+
+    return signal(
+      img.complete && img.naturalWidth !== 0 ? imagePath : defaultImage
+    );
   }
 
   openTeamModal() {
@@ -105,9 +111,10 @@ export class ModalComponent implements OnInit {
     return item?.id.toString();
   }
 
-  selectTeam(item: { name: string }) {
+  selectTeam(item: { name: string; id: string }) {
     this.formData.patchValue({ team: item.name });
     this.teamModal.dismiss();
+    this.shield = item;
   }
 
   onSubmit() {

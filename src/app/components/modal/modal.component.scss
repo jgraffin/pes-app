@@ -1,3 +1,7 @@
 :host {
   @apply flex flex-col fixed z-50 justify-center w-full text-2xl text-lime-50 animate-fade-in h-full items-center bg-opacity-60 bg-dark gap-4;
 }
+
+ion-thumbnail {
+  --size: 30px;
+}

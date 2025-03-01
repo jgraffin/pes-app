@@ -56,11 +56,21 @@
           >
             Campo obrigatório e deve ter pelo menos 3 caracteres.
           </p>
-          <ion-item button (click)="openTeamModal()">
-            <ion-label>Selecione o time</ion-label>
-            <ion-text>{{
-              formData.get("team")?.value || "Selecione um time"
-            }}</ion-text>
+          <ion-item button lines="none" (click)="openTeamModal()">
+            <ion-label slot="start">Selecione o time</ion-label>
+
+            <ng-container *ngIf="formData.get('team')?.value">
+              <ion-thumbnail class="flex items-center justify-center">
+                <img
+                  [alt]="formData.get('team')?.value"
+                  [src]="getTeamImagePath(shield)()"
+                />
+              </ion-thumbnail>
+              <ion-text
+                class="whitespace-nowrap text-ellipsis w-32 overflow-hidden flex pl-2"
+                >{{ formData.get("team")?.value }}</ion-text
+              >
+            </ng-container>
           </ion-item>
         </ion-list>
 
@@ -81,7 +91,7 @@
   (willDismiss)="onModalDismissTeams()"
 >
   <ion-content>
-    <ion-list *ngIf="teams; else noTeams">
+    <ion-list class="pt-10 px-6" lines="none" *ngIf="teams; else noTeams">
       <button
         (click)="onModalDismissTeams()"
         class="absolute top-4 right-4 z-10"
@@ -90,10 +100,13 @@
         <ion-icon class="text-2xl text-[#4F378B]" name="close"></ion-icon>
       </button>
       <ion-item
-        *ngFor="let item of teams; trackBy: trackById"
+        *ngFor="let item of teams(); trackBy: trackById"
         (click)="selectTeam(item)"
       >
-        {{ item?.name }}
+        <ion-thumbnail slot="start">
+          <img [alt]="item?.name" [src]="getTeamImagePath(item)()" />
+        </ion-thumbnail>
+        <ion-label>{{ item?.name }}</ion-label>
       </ion-item>
     </ion-list>
     <ng-template #noTeams>
