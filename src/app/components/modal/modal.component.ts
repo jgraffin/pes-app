@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -8,14 +8,18 @@ import {
 } from '@angular/forms';
 import {
   IonButton,
+  IonButtons,
   IonContent,
+  IonHeader,
   IonIcon,
   IonInput,
   IonItem,
+  IonLabel,
   IonList,
   IonModal,
-  IonSelect,
-  IonSelectOption,
+  IonText,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addCircleOutline, airplane, archive, close } from 'ionicons/icons';
@@ -27,6 +31,11 @@ import { addCircleOutline, airplane, archive, close } from 'ionicons/icons';
   standalone: true,
   imports: [
     NgIf,
+    NgFor,
+    IonButtons,
+    IonTitle,
+    IonToolbar,
+    IonHeader,
     IonButton,
     IonIcon,
     IonContent,
@@ -34,13 +43,14 @@ import { addCircleOutline, airplane, archive, close } from 'ionicons/icons';
     IonList,
     IonItem,
     IonInput,
-    IonSelect,
-    IonSelectOption,
+    IonLabel,
+    IonText,
     ReactiveFormsModule,
   ],
 })
 export class ModalComponent implements OnInit {
   @ViewChild('modal', { static: true }) modal!: IonModal;
+  @ViewChild('teamModal', { static: false }) teamModal!: IonModal;
 
   greetingTitle = 'Bem-vindo,';
   greetingMessage = `Para começar, adicione o nome de </br>cada jogador
@@ -48,6 +58,7 @@ export class ModalComponent implements OnInit {
   formTitle = 'Adicionar jogador';
 
   formData!: FormGroup;
+  teams: Array<{ id: string; name: string }> = [];
 
   constructor(private fb: FormBuilder) {
     addIcons({
@@ -62,6 +73,7 @@ export class ModalComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
+    this.loadTeams();
   }
 
   initializeForm() {
@@ -71,17 +83,45 @@ export class ModalComponent implements OnInit {
     });
   }
 
+  loadTeams() {
+    this.teams = [
+      { id: 'psg', name: 'Paris Saint German' },
+      { id: 'real-madrid', name: 'Real Madrid' },
+      { id: 'barcelona', name: 'Barcelona' },
+      { id: 'man-city', name: 'Manchester City' },
+    ];
+  }
+
+  openTeamModal() {
+    if (!this.teamModal) {
+      console.error('teamModal is not defined!');
+      return;
+    }
+
+    this.teamModal.present();
+  }
+
+  trackById(index: number, item: any): string {
+    return item?.id.toString();
+  }
+
+  selectTeam(item: { name: string }) {
+    this.formData.patchValue({ team: item.name });
+    this.teamModal.dismiss();
+  }
+
   onSubmit() {
     if (this.formData.valid) {
       console.log('Form Submitted:', this.formData.value);
     }
   }
 
-  closeModal() {
+  onModalDismiss() {
+    this.formData.reset();
     this.modal.dismiss();
   }
 
-  onModalDismiss() {
-    this.formData.reset();
+  onModalDismissTeams() {
+    this.teamModal.dismiss();
   }
 }

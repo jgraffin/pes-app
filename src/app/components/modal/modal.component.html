@@ -30,7 +30,11 @@
       >
         {{ formTitle }}
       </h2>
-      <button (click)="closeModal()" class="absolute top-4 right-4" ion-button>
+      <button
+        (click)="onModalDismiss()"
+        class="absolute top-4 right-4"
+        ion-button
+      >
         <ion-icon class="text-2xl text-[#4F378B]" name="close"></ion-icon>
       </button>
       <form [formGroup]="formData" (ngSubmit)="onSubmit()">
@@ -52,49 +56,11 @@
           >
             Campo obrigatório e deve ter pelo menos 3 caracteres.
           </p>
-          <ion-item>
-            <ion-select
-              label="Selecione o time"
-              label-placement="floating"
-              formControlName="team"
-              class="font-alternate"
-            >
-              <ion-select-option id="psg" value="Paris Saint German"
-                >Paris Saint German</ion-select-option
-              >
-              <ion-select-option id="real-madrid" value="Real Madrid">
-                Real Madrid</ion-select-option
-              >
-              <ion-select-option value="Barcelona">
-                Barcelona</ion-select-option
-              >
-              <ion-select-option value="Manchester City">
-                Manchester City</ion-select-option
-              >
-              <ion-select-option value="Juventus"> Juventus</ion-select-option>
-              <ion-select-option value="Ajax"> Ajax</ion-select-option>
-              <ion-select-option value="Chelsea"> Chelsea</ion-select-option>
-              <ion-select-option value="Liverpool">
-                Liverpool</ion-select-option
-              >
-              <ion-select-option value="Real Betis">
-                Real Betis</ion-select-option
-              >
-              <ion-select-option value="Atletico Madrid">
-                Atletico Madrid</ion-select-option
-              >
-              <ion-select-option value="Bayern Munich">
-                Bayern Munich</ion-select-option
-              >
-              <ion-select-option value="Manchester United">
-                Manchester United</ion-select-option
-              >
-              <ion-select-option value="Arsenal"> Arsenal</ion-select-option>
-              <ion-select-option value="Inter Milan">
-                Inter Milan</ion-select-option
-              >
-              <ion-select-option value="Napoli"> Napoli</ion-select-option>
-            </ion-select>
+          <ion-item button (click)="openTeamModal()">
+            <ion-label>Selecione o time</ion-label>
+            <ion-text>{{
+              formData.get("team")?.value || "Selecione um time"
+            }}</ion-text>
           </ion-item>
         </ion-list>
 
@@ -106,4 +72,32 @@
       </form>
     </ion-content>
   </ng-template>
+</ion-modal>
+
+<ion-modal
+  #teamModal
+  [initialBreakpoint]="0.9"
+  [breakpoints]="[0, 0.25, 0.5, 0.9]"
+  (willDismiss)="onModalDismissTeams()"
+>
+  <ion-content>
+    <ion-list *ngIf="teams; else noTeams">
+      <button
+        (click)="onModalDismissTeams()"
+        class="absolute top-4 right-4 z-10"
+        ion-button
+      >
+        <ion-icon class="text-2xl text-[#4F378B]" name="close"></ion-icon>
+      </button>
+      <ion-item
+        *ngFor="let item of teams; trackBy: trackById"
+        (click)="selectTeam(item)"
+      >
+        {{ item?.name }}
+      </ion-item>
+    </ion-list>
+    <ng-template #noTeams>
+      <p class="text-center text-gray-500">Nenhum time encontrado.</p>
+    </ng-template>
+  </ion-content>
 </ion-modal>
