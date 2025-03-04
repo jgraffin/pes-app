@@ -10,8 +10,9 @@
   [innerHTML]="greetingMessage"
 ></p>
 
-<ion-button id="open-modal" class="my-6" color="light" shape="round">
-  Adicionar <ion-icon name="add-circle-outline"></ion-icon
+<ion-button id="open-modal" color="light" shape="round">
+  <span class="flex mr-2">Adicionar</span>
+  <ion-icon class="w-7 h-7 text-[#4F378B]" name="add-circle-outline"></ion-icon
 ></ion-button>
 
 <ion-modal
@@ -46,6 +47,7 @@
               formControlName="name"
               autocomplete="address-line1"
               class="font-alternate"
+              autocapitalize="true"
             ></ion-input>
           </ion-item>
           <p
@@ -54,7 +56,7 @@
               formData.get('name')?.invalid && formData.get('name')?.touched
             "
           >
-            Campo obrigatório e deve ter pelo menos 3 caracteres.
+            Campo obrigatório. Deve ter pelo menos 3 caracteres.
           </p>
           <ion-item button lines="none" (click)="openTeamModal()">
             <ion-label slot="start">Selecione o time</ion-label>
@@ -67,7 +69,7 @@
                 />
               </ion-thumbnail>
               <ion-text
-                class="whitespace-nowrap text-ellipsis w-32 overflow-hidden flex pl-2"
+                class="whitespace-nowrap text-ellipsis w-32 overflow-hidden pl-2"
                 >{{ formData.get("team")?.value }}</ion-text
               >
             </ng-container>
@@ -91,7 +93,7 @@
   (willDismiss)="onModalDismissTeams()"
 >
   <ion-content>
-    <ion-list class="pt-10 px-6" lines="none" *ngIf="teams; else noTeams">
+    <ion-list class="pt-10 px-6" *ngIf="teams; else noTeams">
       <button
         (click)="onModalDismissTeams()"
         class="absolute top-4 right-4 z-10"

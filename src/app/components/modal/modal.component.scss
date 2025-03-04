@@ -4,4 +4,8 @@
 
 ion-thumbnail {
   --size: 30px;
+
+  img {
+    @apply max-w-full max-h-full object-contain;
+  }
 }

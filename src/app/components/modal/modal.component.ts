@@ -88,7 +88,7 @@ export class ModalComponent implements OnInit {
 
   getTeamImagePath(item: Team): Signal<string> {
     const defaultImage = 'assets/icon/favicon.png';
-    const imagePath = `assets/shield/${item.id}.png`;
+    const imagePath = `assets/shield/${item.id}.svg`;
 
     const img = new Image();
     img.src = imagePath;

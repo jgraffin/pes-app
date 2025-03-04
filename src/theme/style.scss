@@ -12,7 +12,7 @@ ion-toolbar {
 }
 
 ion-modal ion-content {
-  --background: #ffffff;
+  --background: var(--ion-color-medium-contrast);
 }
 
 ion-item {
@@ -21,9 +21,21 @@ ion-item {
   --padding-start: 0px;
   --inner-padding-start: 0px;
 
+  --border-color: var(--ion-color-light-shade);
+
   &.ion-invalid.ion-touched {
     --border-color: var(--ion-color-danger);
   }
+
+  label {
+    .label-text-wrapper {
+      @apply opacity-50;
+    }
+  }
+}
+
+ion-label {
+  @apply opacity-50;
 }
 
 .select-interface-option .alert-radio-label {
