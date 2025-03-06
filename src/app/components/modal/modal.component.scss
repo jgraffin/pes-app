@@ -1,5 +1,5 @@
 :host {
-  @apply flex flex-col fixed z-50 justify-center w-full text-2xl text-lime-50 animate-fade-in h-full items-center bg-opacity-60 bg-dark gap-4;
+  @apply flex flex-col fixed z-50 justify-center w-full text-2xl text-lime-50   items-center  gap-4 animate-fade-in bg-opacity-60 bg-dark bottom-0 left-0 rounded-tl-[20px] rounded-tr-[20px];
 }
 
 ion-thumbnail {

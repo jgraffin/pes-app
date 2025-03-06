@@ -1,5 +1,14 @@
 import { JsonPipe, NgFor, NgIf } from '@angular/common';
-import { Component, OnInit, Signal, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  Signal,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -17,10 +26,17 @@ import {
   IonModal,
   IonText,
   IonThumbnail,
+  IonToast,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { addCircleOutline, airplane, archive, close } from 'ionicons/icons';
-import { Team, TeamsService } from 'src/app/services/teams.service';
+import {
+  addCircleOutline,
+  airplane,
+  archive,
+  checkmarkCircleOutline,
+  close,
+} from 'ionicons/icons';
+import { Player, Team, TeamsService } from 'src/app/services/teams.service';
 
 @Component({
   selector: 'modal',
@@ -40,6 +56,7 @@ import { Team, TeamsService } from 'src/app/services/teams.service';
     IonInput,
     IonLabel,
     IonText,
+    IonToast,
     ReactiveFormsModule,
     JsonPipe,
   ],
@@ -47,24 +64,30 @@ import { Team, TeamsService } from 'src/app/services/teams.service';
 export class ModalComponent implements OnInit {
   @ViewChild('modal', { static: true }) modal!: IonModal;
   @ViewChild('teamModal', { static: false }) teamModal!: IonModal;
+  @Output() playersEmitter = new EventEmitter();
 
-  greetingTitle = 'Bem-vindo,';
-  greetingMessage = `Para começar, adicione o nome de </br>cada jogador
-  com seu respectivo time.`;
-  formTitle = 'Adicionar jogador';
+  @Input() players: Player[] = [];
+  @Input() greetings?: {
+    formTitle?: string;
+    title?: string;
+    message?: string;
+  };
 
   formData!: FormGroup;
+
   teams = signal<Team[]>([]);
-  shield!: any;
+  shield!: Team;
+  isToastOpen = false;
+  isLoading = false;
+  playerSuccessfullyAddedMessage = '';
 
   constructor(private fb: FormBuilder, private teamsService: TeamsService) {
-    addIcons({
-      'add-circle-outline': addCircleOutline,
-    });
     addIcons({
       archive: archive,
       airplane: airplane,
       close: close,
+      addCircleOutline: addCircleOutline,
+      checkmarkCircleOutline: checkmarkCircleOutline,
     });
   }
 
@@ -108,7 +131,15 @@ export class ModalComponent implements OnInit {
   }
 
   trackById(index: number, item: any): string {
-    return item?.id.toString();
+    return item?.id;
+  }
+
+  onModalDismiss() {
+    this.modal.dismiss();
+  }
+
+  onModalDismissTeams() {
+    this.teamModal.dismiss();
   }
 
   selectTeam(item: { name: string; id: string }) {
@@ -117,18 +148,38 @@ export class ModalComponent implements OnInit {
     this.shield = item;
   }
 
+  slugifyTeam(value: string): string {
+    return value.toLowerCase().replace(/\s+/g, '-');
+  }
+
   onSubmit() {
-    if (this.formData.valid) {
-      console.log('Form Submitted:', this.formData.value);
+    if (!this.formData.valid) {
+      this.formData.markAllAsTouched();
+      return;
     }
-  }
 
-  onModalDismiss() {
-    this.formData.reset();
-    this.modal.dismiss();
-  }
+    const { team } = this.formData.value;
 
-  onModalDismissTeams() {
-    this.teamModal.dismiss();
+    const payload = {
+      ...this.formData.value,
+      thumbnail: this.slugifyTeam(team),
+    };
+
+    this.teamsService.addPlayer(payload).subscribe((value) => {
+      this.modal.dismiss();
+      this.isLoading = true;
+
+      if (value.id) {
+        setTimeout(() => {
+          this.isToastOpen = true;
+          this.playerSuccessfullyAddedMessage = `Jogador ${value.name.toUpperCase()} adicionado com sucesso!`;
+        }, 1000);
+
+        this.isToastOpen = false;
+        this.players = [...this.players, value];
+        this.playersEmitter.emit(this.players);
+        this.formData.reset();
+      }
+    });
   }
 }

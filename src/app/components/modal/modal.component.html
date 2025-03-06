@@ -1,19 +1,29 @@
-<h1
-  *ngIf="greetingTitle"
-  [innerHTML]="greetingTitle"
-  class="px-6 text-lg font-bold text-center uppercase"
-></h1>
+<ng-container *ngIf="greetings && players.length === 0">
+  <h1
+    [innerHTML]="greetings.title"
+    class="px-6 text-lg font-bold text-center uppercase"
+  ></h1>
 
-<p
-  *ngIf="greetingMessage"
-  class="px-6 text-base font-alternate text-center"
-  [innerHTML]="greetingMessage"
-></p>
+  <p
+    class="px-6 text-base font-alternate text-center"
+    [innerHTML]="greetings.message"
+  ></p>
+</ng-container>
 
-<ion-button id="open-modal" color="light" shape="round">
+<ion-button class="my-4" id="open-modal" color="light" shape="round">
   <span class="flex mr-2">Adicionar</span>
   <ion-icon class="w-7 h-7 text-[#4F378B]" name="add-circle-outline"></ion-icon
 ></ion-button>
+
+<ion-toast
+  [icon]="'checkmark-circle-outline'"
+  [cssClass]="'custom-toast'"
+  [position]="'top'"
+  [translucent]="true"
+  [isOpen]="isToastOpen"
+  [message]="playerSuccessfullyAddedMessage"
+  [duration]="3000"
+></ion-toast>
 
 <ion-modal
   #modal
@@ -29,7 +39,7 @@
       <h2
         class="px-6 pt-8 pb-4 flex w-full font-extrabold text-[23px] text-[#4F378B]"
       >
-        {{ formTitle }}
+        {{ greetings?.formTitle }}
       </h2>
       <button
         (click)="onModalDismiss()"
@@ -74,6 +84,14 @@
               >
             </ng-container>
           </ion-item>
+          <p
+            class="text-red-700 text-sm my-2 pt-1 font-bold border-t border-red-700"
+            *ngIf="
+              formData.get('team')?.invalid && formData.get('team')?.touched
+            "
+          >
+            Campo obrigatório. Selecione um time.
+          </p>
         </ion-list>
 
         <div class="flex w-full px-6 justify-end py-4">

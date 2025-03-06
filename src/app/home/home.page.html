@@ -1,4 +1,9 @@
-<modal *ngIf="isModalLoaded"></modal>
+<modal
+  [ngClass]="{  'h-full rounded-none': players.length === 0 } "
+  [greetings]="greetings"
+  [players]="players"
+  (playersEmitter)="loadPlayers($event)"
+></modal>
 
 <ion-header class="ion-no-border h-24">
   <ion-toolbar class="ion-no-border">
@@ -129,7 +134,32 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true" class="z-10">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list
+    class="w-5/6 mx-auto rounded-xl shadow-lg overflow-hidden animate-fade-in"
+    *ngIf="players && players.length > 0"
+  >
+    <ion-item
+      lines="none"
+      [ngClass]="(i % 2 == 0) ? 'odd' : 'even'"
+      *ngFor="let player of players; trackBy: trackById; let i = index"
+    >
+      <ion-thumbnail class="flex items-center justify-center">
+        <img
+          [alt]="player?.name"
+          [src]="'assets/shield/'+ player?.thumbnail + '.svg' "
+        />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ player?.name }}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
 <ion-footer class="ion-no-border">
   <ion-toolbar class="ion-no-border p-0">
     <div class="flex justify-end w-full translate-x-2">

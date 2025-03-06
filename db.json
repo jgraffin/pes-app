@@ -1,20 +1,52 @@
 {
-    "teams": [
-        {
-            "id": "psg",
-            "name": "Paris Saint German"
-        },
-        {
-            "id": "real-madrid",
-            "name": "Real Madrid"
-        },
-        {
-            "id": "barcelona",
-            "name": "Barcelona"
-        },
-        {
-            "id": "man-city",
-            "name": "Manchester City"
-        }
-    ]
+  "teams": [
+    {
+      "id": "paris-saint-german",
+      "name": "Paris Saint German"
+    },
+    {
+      "id": "real-madrid",
+      "name": "Real Madrid"
+    },
+    {
+      "id": "barcelona",
+      "name": "Barcelona"
+    },
+    {
+      "id": "manchester-city",
+      "name": "Manchester City"
+    }
+  ],
+  "players": [
+    {
+      "id": "c09d",
+      "name": "Julio",
+      "team": "Manchester City",
+      "thumbnail": "manchester-city"
+    },
+    {
+      "id": "4d9f",
+      "name": "Kghbj",
+      "team": "Barcelona",
+      "thumbnail": "barcelona"
+    },
+    {
+      "id": "b674",
+      "name": "Jusjism",
+      "team": "Paris Saint German",
+      "thumbnail": "paris-saint-german"
+    },
+    {
+      "id": "2a9f",
+      "name": "Insjsnss",
+      "team": "Barcelona",
+      "thumbnail": "barcelona"
+    },
+    {
+      "id": "dd97",
+      "name": "Isbdisns",
+      "team": "Real Madrid",
+      "thumbnail": "real-madrid"
+    }
+  ]
 }

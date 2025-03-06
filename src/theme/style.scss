@@ -15,13 +15,24 @@ ion-modal ion-content {
   --background: var(--ion-color-medium-contrast);
 }
 
+.list-ios {
+  background: transparent;
+}
+
 ion-item {
   --padding-end: 0px;
   --inner-padding-end: 0px;
   --padding-start: 0px;
   --inner-padding-start: 0px;
-
   --border-color: var(--ion-color-light-shade);
+
+  &.odd {
+    --background: rgba(255, 255, 255, 0.94);
+  }
+
+  &.even {
+    --background: rgba(255, 255, 255, 0.98);
+  }
 
   &.ion-invalid.ion-touched {
     --border-color: var(--ion-color-danger);
@@ -36,6 +47,10 @@ ion-item {
 
 ion-label {
   @apply opacity-50;
+}
+
+ion-toast.custom-toast::part(icon) {
+  color: var(--ion-color-success-shade);
 }
 
 .select-interface-option .alert-radio-label {
