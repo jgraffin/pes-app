@@ -163,6 +163,7 @@ export class ModalComponent implements OnInit {
     const payload = {
       ...this.formData.value,
       thumbnail: this.slugifyTeam(team),
+      createdAt: new Date().toISOString(),
     };
 
     this.teamsService.addPlayer(payload).subscribe((value) => {
@@ -176,7 +177,11 @@ export class ModalComponent implements OnInit {
         }, 1000);
 
         this.isToastOpen = false;
-        this.players = [...this.players, value];
+        this.players = [...this.players, value].sort(
+          (a: any, b: any) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+
         this.playersEmitter.emit(this.players);
         this.formData.reset();
       }

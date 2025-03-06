@@ -19,34 +19,46 @@
   ],
   "players": [
     {
-      "id": "c09d",
-      "name": "Julio",
-      "team": "Manchester City",
-      "thumbnail": "manchester-city"
-    },
-    {
-      "id": "4d9f",
-      "name": "Kghbj",
-      "team": "Barcelona",
-      "thumbnail": "barcelona"
-    },
-    {
-      "id": "b674",
-      "name": "Jusjism",
+      "id": "3806",
+      "name": "Bjjn",
       "team": "Paris Saint German",
-      "thumbnail": "paris-saint-german"
+      "thumbnail": "paris-saint-german",
+      "createdAt": "2025-03-06T14:59:02.349Z"
     },
     {
-      "id": "2a9f",
-      "name": "Insjsnss",
-      "team": "Barcelona",
-      "thumbnail": "barcelona"
-    },
-    {
-      "id": "dd97",
-      "name": "Isbdisns",
+      "id": "2604",
+      "name": "Jggbml",
       "team": "Real Madrid",
-      "thumbnail": "real-madrid"
+      "thumbnail": "real-madrid",
+      "createdAt": "2025-03-06T14:59:56.323Z"
+    },
+    {
+      "id": "571e",
+      "name": "Julio",
+      "team": "Barcelona",
+      "thumbnail": "barcelona",
+      "createdAt": "2025-03-06T15:56:25.692Z"
+    },
+    {
+      "id": "d750",
+      "name": "Arthur",
+      "team": "Manchester City",
+      "thumbnail": "manchester-city",
+      "createdAt": "2025-03-06T16:03:46.434Z"
+    },
+    {
+      "id": "e620",
+      "name": "Jbbj",
+      "team": "Paris Saint German",
+      "thumbnail": "paris-saint-german",
+      "createdAt": "2025-03-06T16:06:22.603Z"
+    },
+    {
+      "id": "5356",
+      "name": "Jccbj",
+      "team": "Barcelona",
+      "thumbnail": "barcelona",
+      "createdAt": "2025-03-06T16:07:21.380Z"
     }
   ]
 }

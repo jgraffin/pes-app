@@ -58,9 +58,10 @@ export class HomePage implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.teamsService.players$.subscribe((players) => {
-      this.players = players;
-
-      console.log('oi', this.players);
+      this.players = players.sort(
+        (a: any, b: any) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
 
       if (this.players.length === 0) {
         setTimeout(() => {

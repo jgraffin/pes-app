@@ -3,4 +3,12 @@
     --background: var(--ion-background-image) no-repeat bottom right / contain
       fixed;
   }
+
+  ion-thumbnail {
+    @apply p-4;
+  }
+
+  ion-label {
+    @apply text-purple-950 uppercase opacity-100;
+  }
 }
