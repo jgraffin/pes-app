@@ -147,29 +147,56 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="w-5/6 mx-auto flex px-4 py-2 bg-dark bg-opacity-70 rounded-t-xl">
-    <h1 class="text-white text-lg font-bold">LISTA DE JOGADORES</h1>
-  </div>
-  <ion-list
-    class="w-5/6 mx-auto rounded-b-xl shadow-lg overflow-hidden animate-fade-in"
-    *ngIf="players && players.length > 0"
-  >
-    <ion-item
-      lines="none"
-      [ngClass]="(i % 2 == 0) ? 'odd' : 'even'"
-      *ngFor="let player of players; trackBy: trackById; let i = index"
+  <ng-container *ngIf="players && players.length > 0">
+    <div
+      class="w-5/6 mx-auto flex px-4 py-2 bg-dark bg-opacity-70 rounded-t-xl"
     >
-      <ion-thumbnail class="flex items-center justify-center">
-        <img
-          [alt]="player?.name"
-          [src]="'assets/shield/'+ player?.thumbnail + '.svg' "
-        />
-      </ion-thumbnail>
-      <ion-label>
-        <h2 class="text-sm w-40 whitespace-nowrap overflow-hidden">
-          {{ player?.name }}
-        </h2>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+      <h1 class="text-white text-lg font-bold">LISTA DE JOGADORES</h1>
+    </div>
+    <ion-list
+      class="w-5/6 mx-auto rounded-b-xl shadow-lg overflow-hidden animate-fade-in"
+    >
+      <ion-item
+        lines="none"
+        [ngClass]="(i % 2 == 0) ? 'odd' : 'even'"
+        *ngFor="let player of players; trackBy: trackById; let i = index"
+      >
+        <ion-thumbnail class="flex items-center justify-center">
+          <img
+            [alt]="player?.name"
+            [src]="'assets/shield/'+ player?.thumbnail + '.svg' "
+          />
+        </ion-thumbnail>
+        <ion-label>
+          <h2 class="text-sm w-32 whitespace-nowrap overflow-hidden">
+            {{ player?.name }}
+          </h2>
+        </ion-label>
+        <ion-buttons slot="end" class="w-[100px] flex justify-end pr-3 gap-2">
+          <ion-button
+            shape="round"
+            class="w-[35px] h-[35px] flex bg-dark-blue rounded-full px-1.5 text-orange-400"
+          >
+            <svg viewBox="0 0 24 24" class="w-8 h-8 flex">
+              <path
+                d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"
+                fill="#fb923c"
+              />
+            </svg>
+          </ion-button>
+          <ion-button
+            shape="round"
+            class="w-[35px] h-[35px] flex bg-dark-blue rounded-full px-1.5 text-orange-400"
+          >
+            <svg viewBox="0 0 24 24" class="w-8 h-8 flex">
+              <path
+                d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z"
+                fill="#f87171"
+              />
+            </svg>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </ng-container>
 </ion-content>

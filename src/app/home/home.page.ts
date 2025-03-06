@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import {
+  IonButton,
+  IonButtons,
   IonContent,
-  IonFooter,
   IonHeader,
+  IonIcon,
   IonItem,
   IonLabel,
   IonList,
@@ -13,6 +15,8 @@ import {
   IonThumbnail,
   IonToolbar,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { create } from 'ionicons/icons';
 import { BehaviorSubject } from 'rxjs';
 import { ModalComponent } from '../components/modal/modal.component';
 import { Player, TeamsService } from '../services/teams.service';
@@ -27,10 +31,12 @@ import { Player, TeamsService } from '../services/teams.service';
     IonToolbar,
     IonContent,
     IonList,
+    IonIcon,
     IonItem,
     IonLabel,
     IonThumbnail,
-    IonFooter,
+    IonButtons,
+    IonButton,
     IonRefresher,
     IonRefresherContent,
     CommonModule,
@@ -54,7 +60,11 @@ export class HomePage implements AfterViewInit, OnInit {
   private playerSubject = new BehaviorSubject<Player[]>([]);
   player$ = this.playerSubject.asObservable();
 
-  constructor(private teamsService: TeamsService, private fb: FormBuilder) {}
+  constructor(private teamsService: TeamsService) {
+    addIcons({
+      create: create,
+    });
+  }
 
   ngOnInit(): void {
     this.teamsService.players$.subscribe((players) => {
