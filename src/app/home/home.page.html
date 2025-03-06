@@ -147,8 +147,11 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <div class="w-5/6 mx-auto flex px-4 py-2 bg-dark bg-opacity-70 rounded-t-xl">
+    <h1 class="text-white text-lg font-bold">LISTA DE JOGADORES</h1>
+  </div>
   <ion-list
-    class="w-5/6 mx-auto rounded-xl shadow-lg overflow-hidden animate-fade-in"
+    class="w-5/6 mx-auto rounded-b-xl shadow-lg overflow-hidden animate-fade-in"
     *ngIf="players && players.length > 0"
   >
     <ion-item
@@ -163,7 +166,9 @@
         />
       </ion-thumbnail>
       <ion-label>
-        <h2>{{ player?.name }}</h2>
+        <h2 class="text-sm w-40 whitespace-nowrap overflow-hidden">
+          {{ player?.name }}
+        </h2>
       </ion-label>
     </ion-item>
   </ion-list>
