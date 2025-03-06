@@ -7,6 +7,7 @@ import {
   Output,
   Signal,
   signal,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
@@ -62,10 +63,11 @@ import { Player, Team, TeamsService } from 'src/app/services/teams.service';
   ],
 })
 export class ModalComponent implements OnInit {
-  @ViewChild('modal', { static: true }) modal!: IonModal;
-  @ViewChild('teamModal', { static: false }) teamModal!: IonModal;
+  @ViewChild('registerModalRef', { static: true }) modal!: IonModal;
+  @ViewChild('registerModalTeamRef', { static: false }) modalTeam!: IonModal;
   @Output() playersEmitter = new EventEmitter();
 
+  @Input() player!: any;
   @Input() players: Player[] = [];
   @Input() greetings?: {
     formTitle?: string;
@@ -96,10 +98,42 @@ export class ModalComponent implements OnInit {
     this.loadTeams();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(this.player);
+    if (this.player && this.player.id !== undefined) {
+      this.openModal();
+      this.populateFormData(this.player);
+    }
+  }
+
   initializeForm() {
     this.formData = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       team: ['', [Validators.required]],
+    });
+  }
+
+  openModal() {
+    if (!this.modal) {
+      return;
+    }
+
+    this.modal.present();
+  }
+
+  openTeamModal() {
+    if (!this.modalTeam) {
+      return;
+    }
+
+    this.modalTeam.present();
+  }
+
+  populateFormData(player: any) {
+    this.formData.patchValue({
+      name: player?.name,
+      team: player?.team,
+      thumbnail: player?.thumbnail,
     });
   }
 
@@ -109,9 +143,15 @@ export class ModalComponent implements OnInit {
     });
   }
 
+  loadPlayer(playerId: string) {
+    this.teamsService.getPlayerById(playerId).subscribe((player) => {
+      console.log('player', player);
+    });
+  }
+
   getTeamImagePath(item: Team): Signal<string> {
     const defaultImage = 'assets/icon/favicon.png';
-    const imagePath = `assets/shield/${item.id}.svg`;
+    const imagePath = `assets/shield/${item?.id}.svg`;
 
     const img = new Image();
     img.src = imagePath;
@@ -119,15 +159,6 @@ export class ModalComponent implements OnInit {
     return signal(
       img.complete && img.naturalWidth !== 0 ? imagePath : defaultImage
     );
-  }
-
-  openTeamModal() {
-    if (!this.teamModal) {
-      console.error('teamModal is not defined!');
-      return;
-    }
-
-    this.teamModal.present();
   }
 
   trackById(index: number, item: any): string {
@@ -139,12 +170,12 @@ export class ModalComponent implements OnInit {
   }
 
   onModalDismissTeams() {
-    this.teamModal.dismiss();
+    this.modalTeam.dismiss();
   }
 
   selectTeam(item: { name: string; id: string }) {
     this.formData.patchValue({ team: item.name });
-    this.teamModal.dismiss();
+    this.modalTeam.dismiss();
     this.shield = item;
   }
 

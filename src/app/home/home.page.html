@@ -2,6 +2,7 @@
   [ngClass]="{  'h-full rounded-none': players.length === 0 } "
   [greetings]="greetings"
   [players]="players"
+  [player]="player"
   (playersEmitter)="loadPlayers($event)"
 ></modal>
 
@@ -174,6 +175,7 @@
         </ion-label>
         <ion-buttons slot="end" class="w-[100px] flex justify-end pr-3 gap-2">
           <ion-button
+            (click)="onEdit(player)"
             shape="round"
             class="w-[35px] h-[35px] flex bg-dark-blue rounded-full px-1.5 text-orange-400"
           >

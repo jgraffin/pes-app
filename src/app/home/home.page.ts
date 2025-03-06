@@ -49,6 +49,7 @@ export class HomePage implements AfterViewInit, OnInit {
   isModalLoaded = false;
   hasPlayers = false;
   players: Player[] = [];
+  player!: string;
 
   greetings = {
     title: 'Bem-vindo,',
@@ -94,6 +95,10 @@ export class HomePage implements AfterViewInit, OnInit {
     setTimeout(() => {
       this.players = player;
     }, 1000);
+  }
+
+  onEdit(player: any) {
+    this.player = player;
   }
 
   ngAfterViewInit(): void {
