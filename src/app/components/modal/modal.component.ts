@@ -120,6 +120,10 @@ export class ModalComponent implements OnInit {
 
   openModal(value: string) {
     if (value === 'addNew') {
+      if (this.greetings) {
+        this.greetings.formTitle = 'Adicionar JOGADOR';
+      }
+
       this.player = undefined;
       this.singlePlayerEmitter.emit(this.player);
       this.formData.reset();

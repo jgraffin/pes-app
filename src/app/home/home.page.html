@@ -7,6 +7,16 @@
   (singlePlayerEmitter)="player = $event"
 ></modal>
 
+<ion-toast
+  [icon]="'checkmark-circle-outline'"
+  [cssClass]="'custom-toast'"
+  [position]="'top'"
+  [translucent]="true"
+  [isOpen]="isToastOpen"
+  [message]="successfullyDeleted"
+  [duration]="3000"
+></ion-toast>
+
 <ion-header class="ion-no-border h-24">
   <ion-toolbar class="ion-no-border">
     <ng-container *ngIf="!isModalLoaded;else notAvailable">
@@ -189,6 +199,7 @@
             </svg>
           </ion-button>
           <ion-button
+            (click)="onDelete(player)"
             shape="round"
             class="w-[35px] h-[35px] flex bg-dark-blue rounded-full px-1.5 text-orange-400"
           >

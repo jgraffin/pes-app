@@ -12,6 +12,7 @@ export interface Player {
   name: string;
   team: string;
   thumbnail: string;
+  updatedAt?: string;
 }
 
 @Injectable({
