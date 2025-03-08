@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 
 export interface Team {
   id: any;
@@ -25,31 +25,49 @@ export class TeamsService {
   private playersSubject = new BehaviorSubject<Player[]>([]);
   players$ = this.playersSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadPlayers();
+  }
+
+  private loadPlayers(): void {
+    this.http.get<Player[]>(this.players).subscribe((players) => {
+      this.playersSubject.next(players);
+    });
+  }
 
   getTeams(): Observable<Team[]> {
     return this.http.get<Team[]>(this.teams);
   }
 
-  getPlayers() {
-    return this.http
-      .get<Player[]>(this.players)
-      .pipe(tap((players) => this.playersSubject.next(players)));
+  getPlayers(): Observable<Player[]> {
+    return this.http.get<Player[]>(this.players).pipe(
+      tap((players) => {
+        this.playersSubject.next(players);
+      })
+    );
   }
 
   getPlayerById(id: string): Observable<Team> {
     return this.http.get<Team>(`${this.players}/${id}`);
   }
 
-  addPlayer(team: Team): Observable<Player> {
-    return this.http.post<Player>(this.players, team);
+  addPlayer(player: Player): Observable<any> {
+    return this.http.post<Player>(this.players, player).pipe(
+      tap((newPlayer) => {
+        this.playersSubject.next([...this.playersSubject.value, newPlayer]);
+        player;
+      })
+    );
   }
 
-  updatePlayer(id: string, team: Partial<Player>): Observable<Player> {
-    return this.http.put<Player>(`${this.players}/${id}`, team);
+  updatePlayer(id: string, player: Partial<Player>): Observable<any> {
+    return this.http.put<Player>(`${this.players}/${id}`, player);
   }
 
-  deletePlayer(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.players}/${id}`);
+  deletePlayer(id: string): Observable<any> {
+    return this.http.delete<void>(`${this.players}/${id}`).pipe(
+      switchMap(() => this.http.get<Player[]>(this.players)),
+      tap((players) => this.playersSubject.next(players))
+    );
   }
 }

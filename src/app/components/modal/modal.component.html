@@ -26,11 +26,7 @@
   [position]="'top'"
   [translucent]="true"
   [isOpen]="isToastOpen"
-  [message]="
-    player?.id
-      ? playerSuccessfullyUpdatedMessage
-      : playerSuccessfullyAddedMessage
-  "
+  [message]="isUpdate ? successfullyUpdated : successfullyAdded"
   [duration]="3000"
 ></ion-toast>
 

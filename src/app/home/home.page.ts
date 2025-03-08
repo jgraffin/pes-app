@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -44,8 +43,6 @@ import { Player, TeamsService } from '../services/teams.service';
   ],
 })
 export class HomePage implements OnInit {
-  @Input() filledFormData!: FormGroup;
-
   isModalLoaded = false;
   hasPlayers = false;
   players: Player[] = [];
@@ -61,7 +58,10 @@ export class HomePage implements OnInit {
   private playerSubject = new BehaviorSubject<Player[]>([]);
   player$ = this.playerSubject.asObservable();
 
-  constructor(private teamsService: TeamsService) {
+  constructor(
+    private teamsService: TeamsService,
+    private cdRef: ChangeDetectorRef
+  ) {
     addIcons({
       create: create,
     });
@@ -69,24 +69,14 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.teamsService.players$.subscribe((players) => {
-      this.players = players.sort(
-        (a: any, b: any) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
-
-      if (this.players.length === 0) {
-        setTimeout(() => {
-          this.isModalLoaded = true;
-        }, 2000);
-      }
+      this.players = players;
+      this.cdRef.detectChanges();
     });
-
-    this.teamsService.getPlayers().subscribe();
   }
 
   handleRefresh(event: CustomEvent) {
     setTimeout(() => {
-      this.ngOnInit();
+      this.teamsService.getPlayers().subscribe();
       (event.target as HTMLIonRefresherElement).complete();
     }, 2000);
   }
@@ -97,5 +87,9 @@ export class HomePage implements OnInit {
 
   trackById(index: number, item: any): string {
     return item?.id;
+  }
+
+  updateList(updatedPlayers: Player[]) {
+    this.players = [...updatedPlayers];
   }
 }

@@ -9,7 +9,7 @@
 
 <ion-header class="ion-no-border h-24">
   <ion-toolbar class="ion-no-border">
-    <ng-container *ngIf="isModalLoaded;else notAvailable">
+    <ng-container *ngIf="!isModalLoaded;else notAvailable">
       <div
         [ngClass]="{ 'animate-top-to-bottom' : isModalLoaded }"
         class="flex justify-start w-full -translate-x-0.5 -translate-y-5"

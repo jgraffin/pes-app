@@ -63,7 +63,7 @@ import { Player, Team, TeamsService } from 'src/app/services/teams.service';
   ],
 })
 export class ModalComponent implements OnInit {
-  @ViewChild('registerModalRef', { static: true }) modal!: IonModal;
+  @ViewChild('registerModalRef', { static: false }) modal!: IonModal;
   @ViewChild('registerModalTeamRef', { static: false }) modalTeam!: IonModal;
   @Output() listPlayersEmitter = new EventEmitter();
   @Output() singlePlayerEmitter = new EventEmitter();
@@ -84,8 +84,9 @@ export class ModalComponent implements OnInit {
 
   isToastOpen = false;
   isLoading = false;
-  playerSuccessfullyAddedMessage = '';
-  playerSuccessfullyUpdatedMessage = '';
+  isUpdate = false;
+  successfullyAdded = '';
+  successfullyUpdated = '';
 
   constructor(private fb: FormBuilder, private teamsService: TeamsService) {
     addIcons({
@@ -103,7 +104,6 @@ export class ModalComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.player);
     if (this.player?.id !== undefined) {
       this.populateFormData(this.player);
       this.openModal('');
@@ -119,11 +119,11 @@ export class ModalComponent implements OnInit {
   }
 
   openModal(value: string) {
-    // if (value === 'addNew') {
-    //   this.player = undefined;
-    this.singlePlayerEmitter.emit(this.player);
-    //   this.formData.reset();
-    // }
+    if (value === 'addNew') {
+      this.player = undefined;
+      this.singlePlayerEmitter.emit(this.player);
+      this.formData.reset();
+    }
 
     if (!this.modal) {
       return;
@@ -192,62 +192,55 @@ export class ModalComponent implements OnInit {
     const payload = {
       ...this.formData.value,
       thumbnail: this.slugifyTeam(team),
-      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
-    if (!this.player) {
-      this.teamsService.addPlayer(payload).subscribe((value) => {
-        this.modal.dismiss();
-        this.isLoading = true;
-
-        if (value.id) {
-          setTimeout(() => {
-            this.isToastOpen = true;
-            this.playerSuccessfullyAddedMessage = `Jogador ${value.name.toUpperCase()} adicionado com sucesso!`;
-          }, 1000);
-
-          const players = this.sortPlayers(value);
-          this.updateValues(players);
-        }
-      });
-    } else {
-      this.teamsService
-        .updatePlayer(this.player?.id, payload)
-        .subscribe((value) => {
-          if (value.id) {
-            setTimeout(() => {
-              this.isToastOpen = true;
-              this.playerSuccessfullyUpdatedMessage = `Jogador ${value.name.toUpperCase()} atualizado com sucesso!`;
-            }, 1000);
-
-            const players = this.sortPlayers(value);
-            this.updateValues(players);
-          }
-        });
-    }
+    !this.player
+      ? this.addPlayer(payload?.name, payload)
+      : this.updatePlayer(payload);
   }
 
-  updateValues(list: Player[]) {
-    this.listPlayersEmitter.emit(list);
+  addPlayer(name: string, payload: Player) {
+    this.teamsService.addPlayer(payload).subscribe((added) => {
+      this.isToastOpen = false;
+      this.isUpdate = false;
+      setTimeout(() => (this.isToastOpen = true), 10);
+
+      this.successfullyAdded = `Jogador ${name.toUpperCase()} foi adicionado!`;
+
+      this.updateValues(added);
+    });
+  }
+
+  updatePlayer(payload: Partial<Player>) {
+    this.teamsService
+      .updatePlayer(this.player.id, payload)
+      .subscribe((updated) => {
+        this.isToastOpen = false;
+        this.isUpdate = true;
+        setTimeout(() => (this.isToastOpen = true), 10);
+
+        this.successfullyUpdated = `Jogador ${updated.name.toUpperCase()} foi atualizado!`;
+
+        this.updateValues(updated);
+      });
+  }
+
+  updateValues(updatedPlayer: Player) {
+    this.listPlayersEmitter.emit(
+      this.players.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p))
+    );
+
     this.player = undefined;
     this.formData.reset();
     this.modal.dismiss();
   }
 
-  sortPlayers(value: any) {
-    return (this.players = this.players
-      .map((player) => (player.id === value.id ? value : player))
-      .sort(
-        (a: any, b: any) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      ));
+  get name() {
+    return this.formData.get('name') as FormControl;
   }
 
   get team() {
     return this.formData.get('team') as FormControl;
-  }
-
-  get name() {
-    return this.formData.get('name') as FormControl;
   }
 }
