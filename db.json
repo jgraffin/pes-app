@@ -19,10 +19,10 @@
   ],
   "players": [
     {
-      "name": "pohallhhh123",
+      "name": "pohallhh",
       "team": "Paris Saint German",
       "thumbnail": "paris-saint-german",
-      "createdAt": "2025-03-07T23:59:03.682Z",
+      "updatedAt": "2025-03-08T20:30:38.670Z",
       "id": "351b"
     },
     {
@@ -31,6 +31,13 @@
       "thumbnail": "barcelona",
       "createdAt": "2025-03-08T00:04:40.282Z",
       "id": "b002"
+    },
+    {
+      "id": "0347",
+      "name": "Teste",
+      "team": "Manchester City",
+      "thumbnail": "manchester-city",
+      "updatedAt": "2025-03-08T20:31:00.371Z"
     }
   ]
 }

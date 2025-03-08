@@ -98,7 +98,8 @@ export class HomePage implements OnInit {
 
     const alert = await this.alertController.create({
       header: 'EXCLUIR JOGADOR',
-      message: `Deseja excluir o jogador ${currentPlayer.name.toUpperCase()}?`,
+      message: `Deseja excluir ${currentPlayer.name.toUpperCase()}?`,
+      translucent: true,
       buttons: [
         {
           text: 'Cancelar',
