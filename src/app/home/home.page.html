@@ -3,7 +3,8 @@
   [greetings]="greetings"
   [players]="players"
   [player]="player"
-  (playersEmitter)="loadPlayers($event)"
+  (listPlayersEmitter)="players = $event"
+  (singlePlayerEmitter)="player = $event"
 ></modal>
 
 <ion-header class="ion-no-border h-24">
@@ -150,9 +151,10 @@
 
   <ng-container *ngIf="players && players.length > 0">
     <div
-      class="w-5/6 mx-auto flex px-4 py-2 bg-dark bg-opacity-70 rounded-t-xl"
+      class="w-5/6 mx-auto flex justify-between px-4 py-2 bg-dark bg-opacity-70 rounded-t-xl"
     >
       <h1 class="text-white text-lg font-bold">LISTA DE JOGADORES</h1>
+      <strong class="text-white text-lg font-bold">{{ players.length }}</strong>
     </div>
     <ion-list
       class="w-5/6 mx-auto rounded-b-xl shadow-lg overflow-hidden animate-fade-in"

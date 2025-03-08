@@ -19,39 +19,18 @@
   ],
   "players": [
     {
-      "id": "f0bd",
-      "name": "Julio",
-      "team": "Barcelona",
-      "thumbnail": "barcelona",
-      "createdAt": "2025-03-06T18:19:54.217Z"
-    },
-    {
-      "id": "8fe9",
-      "name": "Kaio",
-      "team": "Manchester City",
-      "thumbnail": "manchester-city",
-      "createdAt": "2025-03-06T18:20:12.968Z"
-    },
-    {
-      "id": "3218",
-      "name": "Hana",
-      "team": "Real Madrid",
-      "thumbnail": "real-madrid",
-      "createdAt": "2025-03-06T18:20:28.181Z"
-    },
-    {
-      "id": "9a26",
-      "name": "Vanessa",
+      "name": "pohallhhh123",
       "team": "Paris Saint German",
       "thumbnail": "paris-saint-german",
-      "createdAt": "2025-03-06T18:20:43.566Z"
+      "createdAt": "2025-03-07T23:59:03.682Z",
+      "id": "351b"
     },
     {
-      "id": "4716",
-      "name": "julio",
-      "team": "Manchester City",
-      "thumbnail": "manchester-city",
-      "createdAt": "2025-03-06T19:46:34.434Z"
+      "name": "Julio Graffin1234",
+      "team": "Barcelona",
+      "thumbnail": "barcelona",
+      "createdAt": "2025-03-08T00:04:40.282Z",
+      "id": "b002"
     }
   ]
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
   IonButton,
@@ -43,7 +43,7 @@ import { Player, TeamsService } from '../services/teams.service';
     ModalComponent,
   ],
 })
-export class HomePage implements AfterViewInit, OnInit {
+export class HomePage implements OnInit {
   @Input() filledFormData!: FormGroup;
 
   isModalLoaded = false;
@@ -91,23 +91,8 @@ export class HomePage implements AfterViewInit, OnInit {
     }, 2000);
   }
 
-  loadPlayers(player: any) {
-    setTimeout(() => {
-      this.players = player;
-    }, 1000);
-  }
-
   onEdit(player: any) {
     this.player = player;
-  }
-
-  ngAfterViewInit(): void {
-    console.log('this.players', this.players);
-    if (this.players.length === 0) {
-      setTimeout(() => {
-        this.isModalLoaded = true;
-      }, 2000);
-    }
   }
 
   trackById(index: number, item: any): string {

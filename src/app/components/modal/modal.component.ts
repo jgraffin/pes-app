@@ -5,13 +5,13 @@ import {
   Input,
   OnInit,
   Output,
-  Signal,
   signal,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -65,7 +65,8 @@ import { Player, Team, TeamsService } from 'src/app/services/teams.service';
 export class ModalComponent implements OnInit {
   @ViewChild('registerModalRef', { static: true }) modal!: IonModal;
   @ViewChild('registerModalTeamRef', { static: false }) modalTeam!: IonModal;
-  @Output() playersEmitter = new EventEmitter();
+  @Output() listPlayersEmitter = new EventEmitter();
+  @Output() singlePlayerEmitter = new EventEmitter();
 
   @Input() player!: any;
   @Input() players: Player[] = [];
@@ -78,10 +79,13 @@ export class ModalComponent implements OnInit {
   formData!: FormGroup;
 
   teams = signal<Team[]>([]);
-  shield!: Team;
+  thumbnail = signal<string>('');
+  shield = signal<string>('');
+
   isToastOpen = false;
   isLoading = false;
   playerSuccessfullyAddedMessage = '';
+  playerSuccessfullyUpdatedMessage = '';
 
   constructor(private fb: FormBuilder, private teamsService: TeamsService) {
     addIcons({
@@ -100,9 +104,9 @@ export class ModalComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     console.log(this.player);
-    if (this.player && this.player.id !== undefined) {
-      this.openModal();
+    if (this.player?.id !== undefined) {
       this.populateFormData(this.player);
+      this.openModal('');
     }
   }
 
@@ -110,10 +114,17 @@ export class ModalComponent implements OnInit {
     this.formData = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       team: ['', [Validators.required]],
+      thumbnail: [''],
     });
   }
 
-  openModal() {
+  openModal(value: string) {
+    // if (value === 'addNew') {
+    //   this.player = undefined;
+    this.singlePlayerEmitter.emit(this.player);
+    //   this.formData.reset();
+    // }
+
     if (!this.modal) {
       return;
     }
@@ -129,12 +140,15 @@ export class ModalComponent implements OnInit {
     this.modalTeam.present();
   }
 
-  populateFormData(player: any) {
+  populateFormData(player: Player) {
+    this.formData.reset();
     this.formData.patchValue({
-      name: player?.name,
-      team: player?.team,
-      thumbnail: player?.thumbnail,
+      name: player?.name || '',
+      team: player?.team || '',
+      thumbnail: player?.thumbnail || '',
     });
+
+    this.thumbnail.set(`assets/shield/${player?.thumbnail}.svg`);
   }
 
   loadTeams() {
@@ -143,29 +157,13 @@ export class ModalComponent implements OnInit {
     });
   }
 
-  loadPlayer(playerId: string) {
-    this.teamsService.getPlayerById(playerId).subscribe((player) => {
-      console.log('player', player);
-    });
-  }
-
-  getTeamImagePath(item: Team): Signal<string> {
-    const defaultImage = 'assets/icon/favicon.png';
-    const imagePath = `assets/shield/${item?.id}.svg`;
-
-    const img = new Image();
-    img.src = imagePath;
-
-    return signal(
-      img.complete && img.naturalWidth !== 0 ? imagePath : defaultImage
-    );
-  }
-
   trackById(index: number, item: any): string {
     return item?.id;
   }
 
   onModalDismiss() {
+    this.player = undefined;
+    this.singlePlayerEmitter.emit(this.player);
     this.modal.dismiss();
   }
 
@@ -173,10 +171,10 @@ export class ModalComponent implements OnInit {
     this.modalTeam.dismiss();
   }
 
-  selectTeam(item: { name: string; id: string }) {
+  selectTeam(item: Team) {
     this.formData.patchValue({ team: item.name });
+    this.thumbnail.set(`assets/shield/${item?.id}.svg`);
     this.modalTeam.dismiss();
-    this.shield = item;
   }
 
   slugifyTeam(value: string): string {
@@ -197,25 +195,59 @@ export class ModalComponent implements OnInit {
       createdAt: new Date().toISOString(),
     };
 
-    this.teamsService.addPlayer(payload).subscribe((value) => {
-      this.modal.dismiss();
-      this.isLoading = true;
+    if (!this.player) {
+      this.teamsService.addPlayer(payload).subscribe((value) => {
+        this.modal.dismiss();
+        this.isLoading = true;
 
-      if (value.id) {
-        setTimeout(() => {
-          this.isToastOpen = true;
-          this.playerSuccessfullyAddedMessage = `Jogador ${value.name.toUpperCase()} adicionado com sucesso!`;
-        }, 1000);
+        if (value.id) {
+          setTimeout(() => {
+            this.isToastOpen = true;
+            this.playerSuccessfullyAddedMessage = `Jogador ${value.name.toUpperCase()} adicionado com sucesso!`;
+          }, 1000);
 
-        this.isToastOpen = false;
-        this.players = [...this.players, value].sort(
-          (a: any, b: any) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
+          const players = this.sortPlayers(value);
+          this.updateValues(players);
+        }
+      });
+    } else {
+      this.teamsService
+        .updatePlayer(this.player?.id, payload)
+        .subscribe((value) => {
+          if (value.id) {
+            setTimeout(() => {
+              this.isToastOpen = true;
+              this.playerSuccessfullyUpdatedMessage = `Jogador ${value.name.toUpperCase()} atualizado com sucesso!`;
+            }, 1000);
 
-        this.playersEmitter.emit(this.players);
-        this.formData.reset();
-      }
-    });
+            const players = this.sortPlayers(value);
+            this.updateValues(players);
+          }
+        });
+    }
+  }
+
+  updateValues(list: Player[]) {
+    this.listPlayersEmitter.emit(list);
+    this.player = undefined;
+    this.formData.reset();
+    this.modal.dismiss();
+  }
+
+  sortPlayers(value: any) {
+    return (this.players = this.players
+      .map((player) => (player.id === value.id ? value : player))
+      .sort(
+        (a: any, b: any) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      ));
+  }
+
+  get team() {
+    return this.formData.get('team') as FormControl;
+  }
+
+  get name() {
+    return this.formData.get('name') as FormControl;
   }
 }

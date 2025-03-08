@@ -10,7 +10,12 @@
   ></p>
 </ng-container>
 
-<ion-button class="my-4" (click)="openModal()" color="warning" shape="round">
+<ion-button
+  class="my-4"
+  (click)="openModal('addNew')"
+  color="warning"
+  shape="round"
+>
   <span class="flex mr-2 text-yellow-950">Adicionar</span>
   <ion-icon class="w-7 h-7 text-yellow-950" name="add-circle-outline"></ion-icon
 ></ion-button>
@@ -21,7 +26,11 @@
   [position]="'top'"
   [translucent]="true"
   [isOpen]="isToastOpen"
-  [message]="playerSuccessfullyAddedMessage"
+  [message]="
+    player?.id
+      ? playerSuccessfullyUpdatedMessage
+      : playerSuccessfullyAddedMessage
+  "
   [duration]="3000"
 ></ion-toast>
 
@@ -47,6 +56,7 @@
       >
         <ion-icon class="text-2xl text-[#4F378B]" name="close"></ion-icon>
       </button>
+
       <form [formGroup]="formData" (ngSubmit)="onSubmit()">
         <ion-list class="px-6">
           <ion-item>
@@ -61,33 +71,29 @@
           </ion-item>
           <p
             class="text-red-700 text-sm my-2 font-bold"
-            *ngIf="
-              formData.get('name')?.invalid && formData.get('name')?.touched
-            "
+            *ngIf="name?.invalid && name?.touched"
           >
             Campo obrigatório. Deve ter pelo menos 3 caracteres.
           </p>
           <ion-item button lines="none" (click)="openTeamModal()">
             <ion-label slot="start">Selecione o time</ion-label>
-
-            <ng-container *ngIf="formData.get('team')?.value">
-              <ion-thumbnail class="flex items-center justify-center">
-                <img
-                  [alt]="formData.get('team')?.value"
-                  [src]="getTeamImagePath(shield)()"
-                />
+            <ng-container *ngIf="team.value">
+              <ion-thumbnail
+                *ngIf="thumbnail()"
+                class="flex items-center justify-center"
+              >
+                <img [src]="thumbnail()" [alt]="team.value" />
               </ion-thumbnail>
               <ion-text
                 class="whitespace-nowrap text-ellipsis w-32 overflow-hidden pl-2"
-                >{{ formData.get("team")?.value }}</ion-text
               >
+                {{ team.value }}
+              </ion-text>
             </ng-container>
           </ion-item>
           <p
             class="text-red-700 text-sm my-2 pt-1 font-bold border-t border-red-700"
-            *ngIf="
-              formData.get('team')?.invalid && formData.get('team')?.touched
-            "
+            *ngIf="team?.invalid && team?.touched"
           >
             Campo obrigatório. Selecione um time.
           </p>
@@ -123,7 +129,10 @@
         (click)="selectTeam(item)"
       >
         <ion-thumbnail slot="start">
-          <img [alt]="item?.name" [src]="getTeamImagePath(item)()" />
+          <img
+            [src]="'assets/shield/' + item?.id + '.svg'"
+            [alt]="item?.name"
+          />
         </ion-thumbnail>
         <ion-label>{{ item?.name }}</ion-label>
       </ion-item>

@@ -45,8 +45,8 @@ export class TeamsService {
     return this.http.post<Player>(this.players, team);
   }
 
-  updatePlayer(id: string, team: Partial<Team>): Observable<Team> {
-    return this.http.put<Team>(`${this.players}/${id}`, team);
+  updatePlayer(id: string, team: Partial<Player>): Observable<Player> {
+    return this.http.put<Player>(`${this.players}/${id}`, team);
   }
 
   deletePlayer(id: string): Observable<void> {
