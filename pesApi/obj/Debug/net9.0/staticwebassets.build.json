@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "hnAnRIUXJjkQ86wEBnX0/lpIBdlgJOs3VM6P1IzLwK4=",
+  "Source": "pesApi",
+  "BasePath": "_content/pesApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

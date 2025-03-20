@@ -38,6 +38,7 @@ import {
   close,
 } from 'ionicons/icons';
 import { Player, Team, TeamsService } from 'src/app/services/teams.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'modal',
@@ -177,7 +178,7 @@ export class ModalComponent implements OnInit {
 
   selectTeam(item: Team) {
     this.formData.patchValue({ team: item.name });
-    this.thumbnail.set(`assets/shield/${item?.id}.svg`);
+    this.thumbnail.set(`assets/shield/${item?.thumbnail}.svg`);
     this.modalTeam.dismiss();
   }
 
@@ -196,7 +197,7 @@ export class ModalComponent implements OnInit {
     const payload = {
       ...this.formData.value,
       thumbnail: this.slugifyTeam(team),
-      updatedAt: new Date().toISOString(),
+      id: this.player?.id || uuidv4(),
     };
 
     !this.player

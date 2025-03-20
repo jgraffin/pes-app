@@ -1,0 +1,6 @@
+@pesApi_HostAddress = http://localhost:5156
+
+GET {{pesApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

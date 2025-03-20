@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 export interface Team {
   id: any;
   name: string;
+  thumbnail: string;
 }
 
 export interface Player {
@@ -19,7 +20,7 @@ export interface Player {
   providedIn: 'root',
 })
 export class TeamsService {
-  private baseUrl = 'http://192.168.18.3:3000';
+  private baseUrl = 'http://192.168.18.3:5156';
   private teams = `${this.baseUrl}/teams`;
   private players = `${this.baseUrl}/players`;
 
