@@ -1,6 +1,6 @@
 # pes-app
 
-App desenvolvido na plataforma Ionic Framework, utilizando Angular v18
+App desenvolvido na plataforma Ionic Framework, utilizando Angular v18 e consumindo api .NET
 
 ## Sobre o app ##
 Desenvolvido com a finalidade de montar e organizar jogadores em um campeonato de futebol.
