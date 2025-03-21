@@ -57,6 +57,7 @@ export class HomePage implements OnInit {
     message: `Para começar, adicione o nome de </br>cada jogador
     com seu respectivo time.`,
     formTitle: 'Adicionar JOGADOR',
+    isEdit: false,
   };
 
   successfullyDeleted = '';
@@ -90,6 +91,7 @@ export class HomePage implements OnInit {
   onEdit(player: any) {
     this.player = player;
     this.greetings.formTitle = `Editar JOGADOR`;
+    this.greetings.isEdit = true;
   }
 
   async onDelete(player: any) {
@@ -108,7 +110,7 @@ export class HomePage implements OnInit {
           text: 'Excluir',
           role: 'confirm',
           handler: () => {
-            this.teamsService.deletePlayer(player.id).subscribe(() => {
+            this.teamsService.deletePlayer(player.id).subscribe((values) => {
               this.isToastOpen = false;
               this.cdRef.detectChanges();
 
@@ -125,7 +127,7 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  trackById(index: number, item: any): string {
+  trackById(index: number, item: { id: string }): string {
     return item?.id;
   }
 }

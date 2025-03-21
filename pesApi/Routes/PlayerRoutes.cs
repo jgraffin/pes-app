@@ -47,7 +47,7 @@ public static class PlayerRoutes
 
 
       Players.Remove(found);
-      return Results.Ok(new { message = "Successfully deleted!" });
+      return Results.Ok(new { message = $"{found.Name} Successfully deleted!" });
     });
   }
 }

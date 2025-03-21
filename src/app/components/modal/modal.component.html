@@ -95,10 +95,17 @@
           </p>
         </ion-list>
 
-        <div class="flex w-full px-6 justify-end py-4">
-          <ion-button color="secondary" shape="round" type="submit"
-            >Adicionar</ion-button
+        <div class="flex w-full px-6 justify-end py-4 gap-4">
+          <ion-button
+            color="secondary"
+            shape="round"
+            fill="outline"
+            (click)="onModalDismiss()"
+            >Cancelar</ion-button
           >
+          <ion-button color="secondary" shape="round" type="submit">{{
+            greetings?.isEdit ? "Salvar Alterações" : "Adicionar"
+          }}</ion-button>
         </div>
       </form>
     </ion-content>

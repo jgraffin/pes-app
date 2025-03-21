@@ -174,7 +174,10 @@
         [ngClass]="(i % 2 == 0) ? 'odd' : 'even'"
         *ngFor="let player of players; trackBy: trackById; let i = index"
       >
-        <ion-thumbnail class="flex items-center justify-center">
+        <ion-thumbnail
+          class="flex items-center justify-center"
+          [ngClass]="{'p-5': player?.thumbnail === 'juventus'}"
+        >
           <img
             [alt]="player?.name"
             [src]="'assets/shield/'+ player?.thumbnail + '.svg' "

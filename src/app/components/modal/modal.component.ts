@@ -74,6 +74,7 @@ export class ModalComponent implements OnInit {
     formTitle?: string;
     title?: string;
     message?: string;
+    isEdit?: boolean;
   };
 
   formData!: FormGroup;
@@ -122,6 +123,7 @@ export class ModalComponent implements OnInit {
     if (value === 'addNew') {
       if (this.greetings) {
         this.greetings.formTitle = 'Adicionar JOGADOR';
+        this.greetings.isEdit = false;
       }
 
       this.player = undefined;
@@ -198,18 +200,16 @@ export class ModalComponent implements OnInit {
       thumbnail: this.slugifyTeam(team),
     };
 
-    !this.player
-      ? this.addPlayer(payload?.name, payload)
-      : this.updatePlayer(payload);
+    !this.player ? this.addPlayer(payload) : this.updatePlayer(payload);
   }
 
-  addPlayer(name: string, payload: Player) {
+  addPlayer(payload: Player) {
     this.teamsService.addPlayer(payload).subscribe((added) => {
       this.isToastOpen = false;
       this.isUpdate = false;
       setTimeout(() => (this.isToastOpen = true), 10);
 
-      this.successfullyAdded = `Jogador ${name.toUpperCase()} foi adicionado!`;
+      this.successfullyAdded = `Jogador ${added?.name.toUpperCase()} foi adicionado!`;
 
       this.players = [...this.players, added];
       this.listPlayersEmitter.emit(this.players);
@@ -226,7 +226,7 @@ export class ModalComponent implements OnInit {
         this.isUpdate = true;
         setTimeout(() => (this.isToastOpen = true), 10);
 
-        this.successfullyUpdated = `Jogador ${updated.name.toUpperCase()} foi atualizado!`;
+        this.successfullyUpdated = `Jogador ${updated?.name.toUpperCase()} foi atualizado!`;
 
         this.updateValues(updated, this.isUpdate);
       });
