@@ -14,6 +14,10 @@ public static class PlayerRoutes
 
     app.MapPost("/players", (Player player) =>
     {
+      player.Id = Guid.NewGuid();
+      player.CreatedAt = DateTime.UtcNow;
+      player.UpdatedAt = DateTime.UtcNow;
+
       Players.Add(player);
       return Results.Ok(player);
     });
@@ -22,21 +26,25 @@ public static class PlayerRoutes
     {
       var found = Players.Find(item => item.Id == id);
 
-      if (found == null) Results.NotFound();
+      if (found == null) return Results.NotFound();
 
-      if (found != null) found.Name = player.Name;
+      // Update only necessary fields, keeping the original Id
+      found.Name = player.Name;
+      found.Team = player.Team;
+      found.Thumbnail = player.Thumbnail;
+      found.UpdatedAt = DateTime.UtcNow;
 
-      return Results.Ok(player);
+      return Results.Ok(found); // Return the updated existing player, not the request body
     });
+
 
     app.MapDelete("/players/{id:guid}", (Guid id) =>
     {
       var found = Players.Find(item => item.Id == id);
 
-      if (found == null)
-      {
+      if (found is null)
         return Results.NotFound("Player not found!");
-      }
+
 
       Players.Remove(found);
       return Results.Ok(new { message = "Successfully deleted!" });

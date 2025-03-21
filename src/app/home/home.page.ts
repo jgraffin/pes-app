@@ -77,7 +77,6 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     this.teamsService.players$.subscribe((players) => {
       this.players = players;
-      this.cdRef.detectChanges();
     });
   }
 

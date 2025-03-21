@@ -38,7 +38,6 @@ import {
   close,
 } from 'ionicons/icons';
 import { Player, Team, TeamsService } from 'src/app/services/teams.service';
-import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'modal',
@@ -197,7 +196,6 @@ export class ModalComponent implements OnInit {
     const payload = {
       ...this.formData.value,
       thumbnail: this.slugifyTeam(team),
-      id: this.player?.id || uuidv4(),
     };
 
     !this.player
@@ -213,6 +211,9 @@ export class ModalComponent implements OnInit {
 
       this.successfullyAdded = `Jogador ${name.toUpperCase()} foi adicionado!`;
 
+      this.players = [...this.players, added];
+      this.listPlayersEmitter.emit(this.players);
+
       this.updateValues(added);
     });
   }
@@ -227,14 +228,15 @@ export class ModalComponent implements OnInit {
 
         this.successfullyUpdated = `Jogador ${updated.name.toUpperCase()} foi atualizado!`;
 
-        this.updateValues(updated);
+        this.updateValues(updated, this.isUpdate);
       });
   }
 
-  updateValues(updatedPlayer: Player) {
-    this.listPlayersEmitter.emit(
-      this.players.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p))
-    );
+  updateValues(updatedPlayer: Player, isUpdate?: boolean) {
+    isUpdate &&
+      this.listPlayersEmitter.emit(
+        this.players.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p))
+      );
 
     this.player = undefined;
     this.formData.reset();
