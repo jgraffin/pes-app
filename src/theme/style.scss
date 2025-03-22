@@ -16,8 +16,14 @@ ion-modal ion-content {
   --background: var(--ion-color-medium-contrast);
 }
 
-.list-ios {
+.list-ios,
+.list-md {
   background: transparent;
+}
+
+.sc-ion-buttons-md-s ion-button {
+  --padding-start: 4px;
+  --padding-end: 4px;
 }
 
 .alert-button {
