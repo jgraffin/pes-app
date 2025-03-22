@@ -10,8 +10,11 @@
           "/favicon.ico",
           "/index.csr.html",
           "/index.html",
+          "/*.js",
           "/*.css",
-          "/*.js"
+          "/*.png",
+          "/*.jpg",
+          "/*.svg"
         ]
       }
     },

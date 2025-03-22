@@ -1,5 +1,6 @@
 import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -44,6 +45,7 @@ import { Player, Team, TeamsService } from 'src/app/services/teams.service';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgIf,
     NgFor,
