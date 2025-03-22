@@ -6,6 +6,7 @@ export interface Team {
   id: any;
   name: string;
   thumbnail: string;
+  isSelected: boolean;
 }
 
 export interface Player {
@@ -27,6 +28,9 @@ export class TeamsService {
   private playersSubject = new BehaviorSubject<Player[]>([]);
   players$ = this.playersSubject.asObservable();
 
+  private teamsSubject = new BehaviorSubject<Team[]>([]);
+  teams$ = this.teamsSubject.asObservable();
+
   constructor(private http: HttpClient) {
     this.loadPlayers();
   }
@@ -38,7 +42,17 @@ export class TeamsService {
   }
 
   getTeams(): Observable<Team[]> {
-    return this.http.get<Team[]>(this.teams);
+    return this.http.get<Team[]>(this.teams).pipe(
+      tap((teams) => {
+        this.teamsSubject.next(teams);
+      })
+    );
+  }
+
+  putTeams(id: string, payload: Team): Observable<Team[]> {
+    return this.http
+      .put<Team>(`${this.teams}/${id}`, payload)
+      .pipe(switchMap(() => this.getTeams()));
   }
 
   getPlayers(): Observable<Player[]> {

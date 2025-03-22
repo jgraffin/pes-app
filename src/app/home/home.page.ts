@@ -6,7 +6,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon,
   IonItem,
   IonLabel,
   IonList,
@@ -32,7 +31,6 @@ import { Player, TeamsService } from '../services/teams.service';
     IonToolbar,
     IonContent,
     IonList,
-    IonIcon,
     IonItem,
     IonLabel,
     IonThumbnail,
@@ -110,14 +108,14 @@ export class HomePage implements OnInit {
           text: 'Excluir',
           role: 'confirm',
           handler: () => {
-            this.teamsService.deletePlayer(player.id).subscribe((values) => {
+            this.teamsService.deletePlayer(player.id).subscribe(() => {
               this.isToastOpen = false;
               this.cdRef.detectChanges();
-
               setTimeout(() => (this.isToastOpen = true), 10);
 
               this.successfullyDeleted = `Jogador ${currentPlayer.name.toUpperCase()} foi excluído!`;
-              this.cdRef.detectChanges();
+
+              this.updateTeams(player);
             });
           },
         },
@@ -125,6 +123,25 @@ export class HomePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  updateTeams(player: Player) {
+    this.players = this.players.filter((p) => p.id !== player.id);
+    this.cdRef.detectChanges();
+
+    const hasOtherPlayers = this.players.some((p) => p.team === player.team);
+
+    if (!hasOtherPlayers) {
+      this.teamsService.getTeams().subscribe((teams) => {
+        const team = teams.find((t) => t.name === player.team);
+
+        if (team) {
+          const resetPayload = { ...team, isSelected: false };
+
+          this.teamsService.putTeams(team.id, resetPayload).subscribe();
+        }
+      });
+    }
   }
 
   trackById(index: number, item: { id: string }): string {

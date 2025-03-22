@@ -1,4 +1,4 @@
-import { JsonPipe, NgFor, NgIf } from '@angular/common';
+import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -60,6 +60,7 @@ import { Player, Team, TeamsService } from 'src/app/services/teams.service';
     IonToast,
     ReactiveFormsModule,
     JsonPipe,
+    NgClass,
   ],
 })
 export class ModalComponent implements OnInit {
@@ -88,6 +89,7 @@ export class ModalComponent implements OnInit {
   isUpdate = false;
   successfullyAdded = '';
   successfullyUpdated = '';
+  teamId = '';
 
   constructor(private fb: FormBuilder, private teamsService: TeamsService) {
     addIcons({
@@ -101,7 +103,6 @@ export class ModalComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    this.loadTeams();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -120,6 +121,8 @@ export class ModalComponent implements OnInit {
   }
 
   openModal(value: string) {
+    this.loadTeams();
+
     if (value === 'addNew') {
       if (this.greetings) {
         this.greetings.formTitle = 'Adicionar JOGADOR';
@@ -233,14 +236,55 @@ export class ModalComponent implements OnInit {
   }
 
   updateValues(updatedPlayer: Player, isUpdate?: boolean) {
-    isUpdate &&
-      this.listPlayersEmitter.emit(
-        this.players.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p))
+    if (isUpdate) {
+      this.players = this.players.map((p) =>
+        p.id === updatedPlayer.id ? updatedPlayer : p
       );
+      this.listPlayersEmitter.emit(this.players);
+    }
+
+    const previousTeam = this.teams().find(
+      (team) => team.name === this.player?.team
+    );
+
+    const newTeam = this.teams().find(
+      (team) => team.name === updatedPlayer.team
+    );
+
+    this.teamId = newTeam?.id;
+
+    this.handlePreviousTeam(previousTeam);
+    this.handleNotSelectedTeam(newTeam);
 
     this.player = undefined;
     this.formData.reset();
     this.modal.dismiss();
+  }
+
+  handlePreviousTeam(previousTeam: any) {
+    if (previousTeam && previousTeam.id !== this.teamId) {
+      const hasOtherPlayers = this.players.some(
+        (p) => p.team === previousTeam.name
+      );
+
+      if (!hasOtherPlayers) {
+        const resetPayload = { ...previousTeam, isSelected: false };
+        this.teamsService.putTeams(previousTeam.id, resetPayload).subscribe();
+      }
+    }
+  }
+
+  handleNotSelectedTeam(newTeam: any) {
+    if (newTeam && !newTeam.isSelected) {
+      const payloadTeam = {
+        ...newTeam,
+        isSelected: true,
+      };
+
+      this.teamsService
+        .putTeams(newTeam.id, payloadTeam)
+        .subscribe((teams) => this.teams.set(teams));
+    }
   }
 
   get name() {

@@ -1,11 +1,10 @@
 using pesApi.Models;
+using pesApi.Routes; // Import PlayerRoutes namespace
 
 namespace pesApi.Routes;
 
 public static class TeamRoutes
 {
-
-  // Static list of teams
   public static List<Team> Teams = new()
   {
     new (Guid.NewGuid(), name: "Manchester City", thumbnail: "manchester-city", isSelected: false),
@@ -17,30 +16,32 @@ public static class TeamRoutes
     new (Guid.NewGuid(), name: "Arsenal", thumbnail: "arsenal", isSelected: false),
   };
 
-  // Mapping routes for the api
   public static void MapTeamsRoutes(this WebApplication app)
   {
     app.MapGet("/teams", () => Teams);
 
     app.MapPut("/teams/{id:guid}", (Guid id, Team team) =>
     {
-      var found = Teams.Find(item => item.Id == id);
-
+      var found = Teams.Find(t => t.Id == id);
       if (found is null) return Results.NotFound();
+
+      var previouslySelected = Teams.FirstOrDefault(t => t.IsSelected);
+
+      if (previouslySelected != null && previouslySelected.Id != id)
+      {
+        bool hasPlayers = PlayerRoutes.Players.Any(p => p.Team == previouslySelected.Name);
+
+        if (!hasPlayers)
+        {
+          previouslySelected.IsSelected = false;
+        }
+      }
 
       found.Name = team.Name;
       found.Thumbnail = team.Thumbnail;
-
-      if (found.IsSelected)
-      {
-        found.IsSelected = false;
-      }
-
-      found.IsSelected = true;
+      found.IsSelected = team.IsSelected;
 
       return Results.Ok(found);
     });
-
   }
-
 }

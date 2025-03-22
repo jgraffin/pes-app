@@ -129,6 +129,7 @@
       </button>
       <ion-item
         *ngFor="let item of teams(); trackBy: trackById"
+        [ngClass]="{ 'is-selected': item.isSelected }"
         (click)="selectTeam(item)"
       >
         <ion-thumbnail slot="start">
