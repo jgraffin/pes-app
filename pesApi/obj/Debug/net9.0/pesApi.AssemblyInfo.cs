@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("pesApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdb01ac1e64e410a05839235acfef0e31c6f0f64")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+00c49bb81fc5c63d7e1238d08580493b6bf3adf5")]
 [assembly: System.Reflection.AssemblyProductAttribute("pesApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("pesApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
