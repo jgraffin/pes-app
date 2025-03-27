@@ -154,7 +154,7 @@
     </ng-template>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" class="z-10">
+<ion-content *ngIf="isLoaded" [fullscreen]="true" class="z-10" @fadeInFromRight>
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>

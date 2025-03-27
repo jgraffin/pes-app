@@ -119,7 +119,7 @@
   (willDismiss)="onModalDismissTeams()"
 >
   <ion-content>
-    <ion-list class="pt-10 px-6" *ngIf="teams; else noTeams">
+    <ion-list class="pt-10 px-6" *ngIf="teams(); else noTeams">
       <button
         (click)="onModalDismissTeams()"
         class="absolute top-4 right-4 z-10"

@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
@@ -42,6 +43,17 @@ import { Player, TeamsService } from '../services/teams.service';
     CommonModule,
     ModalComponent,
   ],
+  animations: [
+    trigger('fadeInFromRight', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(50px)' }),
+        animate(
+          '500ms 2s ease-out',
+          style({ opacity: 1, transform: 'translateX(0)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class HomePage implements OnInit {
   isModalLoaded = false;
@@ -49,6 +61,7 @@ export class HomePage implements OnInit {
   hasPlayers = false;
   players: Player[] = [];
   player!: string;
+  isLoaded = false;
 
   greetings = {
     title: 'Bem-vindo,',
@@ -76,6 +89,7 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     this.teamsService.players$.subscribe((players) => {
       this.players = players;
+      this.isLoaded = true;
     });
   }
 
