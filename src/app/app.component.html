@@ -1,7 +1,9 @@
 <ion-app>
   <div
-    *ngIf="loadingService.isLoading()"
-    class="w-full h-full flex items-center justify-center fixed left-0 top-0 z-50 bg-dark-blue"
+    *ngIf="
+      loadingService.isLoading() || loadingRandomPlayersService.isLoading()
+    "
+    class="w-full h-full flex flex-col items-center justify-center fixed left-0 top-0 z-50 bg-dark-blue gap-4"
   >
     <svg
       width="65px"
@@ -57,6 +59,9 @@
         </circle>
       </g>
     </svg>
+    <p class="font-bold" *ngIf="loadingRandomPlayersService.isLoading()">
+      Sorteando jogadores, aguarde...
+    </p>
   </div>
 
   <ion-router-outlet></ion-router-outlet>

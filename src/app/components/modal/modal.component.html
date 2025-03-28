@@ -11,6 +11,7 @@
 </ng-container>
 
 <ion-button
+  [ngClass]="{ 'mr-auto ml-5': players.length >= 3 }"
   class="my-4"
   (click)="openModal('addNew')"
   color="warning"

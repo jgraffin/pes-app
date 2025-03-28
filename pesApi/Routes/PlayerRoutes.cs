@@ -7,6 +7,7 @@ public static class PlayerRoutes
   // Empty list for players
   public static List<Player> Players = new List<Player>();
 
+
   // Mapping routes player
   public static void MapPlayersRoutes(this WebApplication app)
   {
@@ -58,6 +59,31 @@ public static class PlayerRoutes
       }
 
       return Results.Ok(found);
+    });
+
+    app.MapPost("/random-players", (List<Player> randomPlayers) =>
+    {
+      var randomPlayersId = Guid.NewGuid().ToString(); // Generate a UUID for the list
+      var rng = new Random();
+
+      var processedPlayers = randomPlayers
+        .Select(player => new Player
+        {
+          Id = Guid.NewGuid(),
+          Name = player.Name,
+          Team = player.Team,
+          Thumbnail = player.Thumbnail,
+          CreatedAt = DateTime.UtcNow,
+          UpdatedAt = DateTime.UtcNow
+        })
+        .OrderBy(_ => rng.Next()) // Shuffle the list randomly
+        .ToList();
+
+      return Results.Ok(new
+      {
+        randomPlayersId,
+        players = processedPlayers
+      });
     });
 
 

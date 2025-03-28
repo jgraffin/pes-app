@@ -24,6 +24,7 @@ export class TeamsService {
   private baseUrl = 'http://192.168.18.3:5156';
   private teams = `${this.baseUrl}/teams`;
   private players = `${this.baseUrl}/players`;
+  private randomPlayers = `${this.baseUrl}/random-players`;
 
   private playersSubject = new BehaviorSubject<Player[]>([]);
   players$ = this.playersSubject.asObservable();
@@ -85,5 +86,11 @@ export class TeamsService {
       switchMap(() => this.http.get<Player[]>(this.players)),
       tap((players) => this.playersSubject.next(players))
     );
+  }
+
+  randomizePlayers(payload: Player[]): Observable<any> {
+    return this.http
+      .post<Player>(this.randomPlayers, payload)
+      .pipe(tap((players) => players));
   }
 }

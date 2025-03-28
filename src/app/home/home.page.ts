@@ -7,6 +7,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonItem,
   IonLabel,
   IonList,
@@ -17,7 +18,7 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { create } from 'ionicons/icons';
+import { create, football } from 'ionicons/icons';
 import { BehaviorSubject } from 'rxjs';
 import { ModalComponent } from '../components/modal/modal.component';
 import { Player, TeamsService } from '../services/teams.service';
@@ -40,6 +41,7 @@ import { Player, TeamsService } from '../services/teams.service';
     IonRefresher,
     IonRefresherContent,
     IonToast,
+    IonIcon,
     CommonModule,
     ModalComponent,
   ],
@@ -83,6 +85,7 @@ export class HomePage implements OnInit {
   ) {
     addIcons({
       create: create,
+      football: football,
     });
   }
 
@@ -137,6 +140,12 @@ export class HomePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  onRandomizePlayers() {
+    this.teamsService.randomizePlayers(this.players).subscribe((data) => {
+      console.log('opaaa', data);
+    });
   }
 
   updateTeams(player: Player) {
