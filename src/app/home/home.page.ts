@@ -55,6 +55,12 @@ import { Player, TeamsService } from '../services/teams.service';
         ),
       ]),
     ]),
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms ease-in', style({ opacity: 1 })),
+      ]),
+    ]),
   ],
 })
 export class HomePage implements OnInit {
@@ -64,6 +70,7 @@ export class HomePage implements OnInit {
   players: Player[] = [];
   player!: string;
   isLoaded = false;
+  buttonVisible = false;
 
   greetings = {
     title: 'Bem-vindo,',
@@ -94,6 +101,12 @@ export class HomePage implements OnInit {
       this.players = players;
       this.isLoaded = true;
     });
+  }
+
+  onAnimationDone(event: any) {
+    if (event.triggerName === 'fadeInFromRight') {
+      this.buttonVisible = true;
+    }
   }
 
   handleRefresh(event: CustomEvent) {

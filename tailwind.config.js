@@ -29,11 +29,12 @@ module.exports = {
         'fade-in': 'fade-in 0.5s ease-in-out forwards',
       },
     },
-
     backgroundColor: {
       'dark-blue': '#171733',
-      'dark': '#000000'
-    }
+      'dark': '#000000',
+      transparent: 'transparent'
+    },
+
   },
   plugins: [],
 }
