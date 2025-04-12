@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+
+import { provideHttpClient } from '@angular/common/http';
 import { ModalComponent } from './modal.component';
 
 describe('ModalComponent', () => {
@@ -9,8 +12,8 @@ describe('ModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [ModalComponent, IonicModule.forRoot()],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ModalComponent);

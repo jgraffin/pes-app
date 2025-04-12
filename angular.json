@@ -7,7 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@ionic/angular-toolkit:page": {
-          "style": "scss",
+          "styleext": "scss",
           "standalone": true
         }
       },
@@ -16,13 +16,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/pes-app",
+            "outputPath": {
+              "base": "www",
+              "browser": ""
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
             "polyfills": [
-              "zone.js"
+              "src/polyfills.ts"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -34,11 +36,11 @@
               }
             ],
             "styles": [
-              "src/global.scss"
+              "src/global.scss",
+              "src/theme/variables.scss"
             ],
             "scripts": [],
-            "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json"
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -82,6 +84,9 @@
             },
             "development": {
               "buildTarget": "app:build:development"
+            },
+            "ci": {
+              "progress": false
             }
           },
           "defaultConfiguration": "development"
@@ -96,6 +101,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
+            "polyfills": "zone.js",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
@@ -139,10 +145,10 @@
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {
-      "style": "scss"
+      "styleext": "scss"
     },
     "@ionic/angular-toolkit:page": {
-      "style": "scss"
+      "styleext": "scss"
     },
     "@angular-eslint/schematics:application": {
       "setParserOptionsProject": true
