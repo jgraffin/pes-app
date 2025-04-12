@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   AlertController,
   IonButton,
@@ -20,8 +21,8 @@ import {
 import { addIcons } from 'ionicons';
 import { create, football } from 'ionicons/icons';
 import { BehaviorSubject } from 'rxjs';
-import { ModalComponent } from '../components/modal/modal.component';
-import { Player, TeamsService } from '../services/teams.service';
+import { ModalComponent } from '../../components/modal/modal.component';
+import { Player, TeamsService } from '../../services/teams.service';
 
 @Component({
   selector: 'app-home',
@@ -88,7 +89,8 @@ export class HomePage implements OnInit {
   constructor(
     private teamsService: TeamsService,
     private cdRef: ChangeDetectorRef,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
   ) {
     addIcons({
       create: create,
@@ -158,6 +160,9 @@ export class HomePage implements OnInit {
   onRandomizePlayers() {
     this.teamsService.randomizePlayers(this.players).subscribe((data) => {
       console.log('opaaa', data);
+      if (data) {
+        this.router.navigate(['tournament']);
+      }
     });
   }
 
