@@ -16,9 +16,16 @@
   (click)="openModal('addNew')"
   color="warning"
   shape="round"
+  data-testid="button-add"
 >
-  <span class="flex mr-2 text-yellow-950">Adicionar</span>
-  <ion-icon class="w-7 h-7 text-yellow-950" name="add-circle-outline"></ion-icon
+  <span class="flex mr-2 text-yellow-950" data-testid="button-text"
+    >Adicionar</span
+  >
+  <ion-icon
+    class="w-7 h-7 text-yellow-950"
+    name="add-circle-outline"
+    data-testid="button-icon"
+  ></ion-icon
 ></ion-button>
 
 <ion-toast
@@ -117,12 +124,12 @@
   #registerModalTeamRef
   [initialBreakpoint]="0.9"
   [breakpoints]="[0, 0.25, 0.5, 0.9]"
-  (willDismiss)="onModalDismissTeams()"
+  (willDismiss)="modalTeam.dismiss()"
 >
   <ion-content>
     <ion-list class="pt-10 px-6" *ngIf="teams(); else noTeams">
       <button
-        (click)="onModalDismissTeams()"
+        (click)="modalTeam.dismiss()"
         class="absolute top-4 right-4 z-10"
         ion-button
       >

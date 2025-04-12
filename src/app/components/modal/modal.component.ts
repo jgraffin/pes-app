@@ -1,4 +1,4 @@
-import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -61,7 +61,6 @@ import { Player, Team, TeamsService } from 'src/app/services/teams.service';
     IonText,
     IonToast,
     ReactiveFormsModule,
-    JsonPipe,
     NgClass,
   ],
 })
@@ -125,19 +124,17 @@ export class ModalComponent implements OnInit {
   openModal(value: string) {
     this.loadTeams();
 
+    if (!this.greetings) {
+      return;
+    }
+
     if (value === 'addNew') {
-      if (this.greetings) {
-        this.greetings.formTitle = 'Adicionar JOGADOR';
-        this.greetings.isEdit = false;
-      }
+      this.greetings.formTitle = 'Adicionar JOGADOR';
+      this.greetings.isEdit = false;
 
       this.player = undefined;
       this.singlePlayerEmitter.emit(this.player);
       this.formData.reset();
-    }
-
-    if (!this.modal) {
-      return;
     }
 
     this.modal.present();
@@ -168,7 +165,7 @@ export class ModalComponent implements OnInit {
     });
   }
 
-  trackById(index: number, item: any): string {
+  trackById(index: number, item: { id: string }): string {
     return item?.id;
   }
 
@@ -176,10 +173,6 @@ export class ModalComponent implements OnInit {
     this.player = undefined;
     this.singlePlayerEmitter.emit(this.player);
     this.modal.dismiss();
-  }
-
-  onModalDismissTeams() {
-    this.modalTeam.dismiss();
   }
 
   selectTeam(item: Team) {
