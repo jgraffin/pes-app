@@ -65,13 +65,14 @@ import { Player, TeamsService } from '../../services/teams.service';
   ],
 })
 export class HomePage implements OnInit {
+  buttonVisible = false;
+  hasPlayers = false;
+  isLoaded = false;
   isModalLoaded = false;
   isToastOpen = false;
-  hasPlayers = false;
+  player!: Player;
   players: Player[] = [];
-  player!: string;
-  isLoaded = false;
-  buttonVisible = false;
+  successfullyDeleted = '';
 
   greetings = {
     title: 'Bem-vindo,',
@@ -80,8 +81,6 @@ export class HomePage implements OnInit {
     formTitle: 'Adicionar JOGADOR',
     isEdit: false,
   };
-
-  successfullyDeleted = '';
 
   private playerSubject = new BehaviorSubject<Player[]>([]);
   player$ = this.playerSubject.asObservable();

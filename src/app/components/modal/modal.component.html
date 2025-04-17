@@ -73,12 +73,11 @@
               autocapitalize="true"
             ></ion-input>
           </ion-item>
-          <p
-            class="text-red-700 text-sm my-2 font-bold"
-            *ngIf="name?.invalid && name?.touched"
-          >
+          @if(name?.invalid && name?.touched) {
+          <p class="text-red-700 text-sm my-2 font-bold">
             Campo obrigatório. Deve ter pelo menos 3 caracteres.
           </p>
+          }
           <ion-item button lines="none" (click)="openTeamModal()">
             <ion-label slot="start">Selecione o time</ion-label>
             <ng-container *ngIf="team.value">

@@ -1,15 +1,16 @@
+@if(isLoaded) {
 <modal
   [ngClass]="{
-    'h-full rounded-none bg-dark bg-opacity-55': players.length === 0,
-    'w-auto': players && players.length >= 3 
-  }"
+      'h-full rounded-none bg-dark bg-opacity-55': players.length === 0,
+      'w-auto': players && players.length >= 3 
+    }"
   [greetings]="greetings"
   [players]="players"
   [player]="player"
   (listPlayersEmitter)="players = $event"
   (singlePlayerEmitter)="player = $event"
 ></modal>
-
+} @defer(when isToastOpen) {
 <ion-toast
   [icon]="'checkmark-circle-outline'"
   [cssClass]="'custom-toast'"
@@ -19,162 +20,161 @@
   [message]="successfullyDeleted"
   [duration]="3000"
 ></ion-toast>
+}
 
 <ion-header class="ion-no-border h-24">
   <ion-toolbar class="ion-no-border">
-    <ng-container *ngIf="!isModalLoaded;else notAvailable">
-      <div
-        [ngClass]="{ 'animate-top-to-bottom' : isModalLoaded }"
-        class="flex justify-start w-full -translate-x-0.5 -translate-y-5"
+    @if(!isModalLoaded) {
+    <div
+      [ngClass]="{ 'animate-top-to-bottom' : isModalLoaded }"
+      class="flex justify-start w-full -translate-x-0.5 -translate-y-5"
+    >
+      <svg
+        width="427"
+        height="243.79"
+        viewBox="0 0 289 165"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <svg
-          width="427"
-          height="243.79"
-          viewBox="0 0 289 165"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="Mask group">
-            <mask
-              id="mask0_2_13"
-              style="mask-type: alpha"
-              maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="289"
-              height="165"
-            >
-              <rect id="Rectangle 1" width="289" height="165" fill="#D9D9D9" />
-            </mask>
-            <g mask="url(#mask0_2_13)">
-              <g id="Group 1">
-                <path
-                  id="Vector 6"
-                  d="M-114 36.467L-95.868 -8.00464C-26.1092 -4.53618 -21.324 -9.4674 1.44679 -17.1163C33.1238 -22.192 110.128 -32.0753 85.7532 -6.08455C61.3782 19.9062 -45.9526 32.8312 -114 36.467Z"
-                  fill="url(#paint0_linear_2_13)"
-                />
-                <path
-                  id="Vector 2"
-                  d="M139.345 -21.5171C104.277 -0.810306 54.6337 31.3099 34.2421 35.2325C15.3403 55.249 -46.3099 73.6404 -17.2579 69.2326C11.7941 64.8248 62.7421 62.7326 138.427 3.92464L166.807 1.37392C172.264 -14.8842 174.413 -42.2238 139.345 -21.5171Z"
-                  fill="url(#paint1_linear_2_13)"
-                />
-                <path
-                  id="Vector 1"
-                  d="M58.4168 -3.88545C40.8168 12.9146 9.58349 26.6146 -3.08318 32.6146C-9.91651 45.7812 -21.4832 73.1146 -3.08317 65.1146C15.3168 57.1146 55.9168 21.6146 65.4168 8.11456L83.9168 1.11455C82.7502 -7.55211 76.0168 -20.6854 58.4168 -3.88545Z"
-                  fill="url(#paint2_linear_2_13)"
-                />
-                <path
-                  id="Vector 4"
-                  d="M110 71.9651L118.5 22.4999C186.85 10.1119 190.482 3.99361 211 -8.99999C240.679 -21.4038 313.327 -49.0541 295 -17C276.673 15.0541 175.239 52.7269 110 71.9651Z"
-                  fill="url(#paint3_linear_2_13)"
-                />
-                <path
-                  id="Vector 5"
-                  d="M-52.7914 191.733L-54.3106 143.731C10.8305 118.533 13.1968 112.082 30.8895 95.8342C57.7651 78.3157 124.096 37.9729 112.397 71.6296C100.697 105.286 7.8972 160.74 -52.7914 191.733Z"
-                  fill="url(#paint4_linear_2_13)"
-                />
-                <path
-                  id="Vector 3"
-                  d="M-5.50002 125.5L-2.1554 67.2127C65.2713 50.5164 124.847 13.2682 144.5 -1.00004C173.333 -15.2605 223.52 -30.9557 207.261 2.1958C191.003 35.3473 58.3884 102.165 -5.50002 125.5Z"
-                  fill="url(#paint5_linear_2_13)"
-                />
-              </g>
+        <g id="Mask group">
+          <mask
+            id="mask0_2_13"
+            style="mask-type: alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="289"
+            height="165"
+          >
+            <rect id="Rectangle 1" width="289" height="165" fill="#D9D9D9" />
+          </mask>
+          <g mask="url(#mask0_2_13)">
+            <g id="Group 1">
+              <path
+                id="Vector 6"
+                d="M-114 36.467L-95.868 -8.00464C-26.1092 -4.53618 -21.324 -9.4674 1.44679 -17.1163C33.1238 -22.192 110.128 -32.0753 85.7532 -6.08455C61.3782 19.9062 -45.9526 32.8312 -114 36.467Z"
+                fill="url(#paint0_linear_2_13)"
+              />
+              <path
+                id="Vector 2"
+                d="M139.345 -21.5171C104.277 -0.810306 54.6337 31.3099 34.2421 35.2325C15.3403 55.249 -46.3099 73.6404 -17.2579 69.2326C11.7941 64.8248 62.7421 62.7326 138.427 3.92464L166.807 1.37392C172.264 -14.8842 174.413 -42.2238 139.345 -21.5171Z"
+                fill="url(#paint1_linear_2_13)"
+              />
+              <path
+                id="Vector 1"
+                d="M58.4168 -3.88545C40.8168 12.9146 9.58349 26.6146 -3.08318 32.6146C-9.91651 45.7812 -21.4832 73.1146 -3.08317 65.1146C15.3168 57.1146 55.9168 21.6146 65.4168 8.11456L83.9168 1.11455C82.7502 -7.55211 76.0168 -20.6854 58.4168 -3.88545Z"
+                fill="url(#paint2_linear_2_13)"
+              />
+              <path
+                id="Vector 4"
+                d="M110 71.9651L118.5 22.4999C186.85 10.1119 190.482 3.99361 211 -8.99999C240.679 -21.4038 313.327 -49.0541 295 -17C276.673 15.0541 175.239 52.7269 110 71.9651Z"
+                fill="url(#paint3_linear_2_13)"
+              />
+              <path
+                id="Vector 5"
+                d="M-52.7914 191.733L-54.3106 143.731C10.8305 118.533 13.1968 112.082 30.8895 95.8342C57.7651 78.3157 124.096 37.9729 112.397 71.6296C100.697 105.286 7.8972 160.74 -52.7914 191.733Z"
+                fill="url(#paint4_linear_2_13)"
+              />
+              <path
+                id="Vector 3"
+                d="M-5.50002 125.5L-2.1554 67.2127C65.2713 50.5164 124.847 13.2682 144.5 -1.00004C173.333 -15.2605 223.52 -30.9557 207.261 2.1958C191.003 35.3473 58.3884 102.165 -5.50002 125.5Z"
+                fill="url(#paint5_linear_2_13)"
+              />
             </g>
           </g>
-          <defs>
-            <linearGradient
-              id="paint0_linear_2_13"
-              x1="33.0131"
-              y1="-66.9966"
-              x2="-10.9235"
-              y2="60.0771"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#73055B" />
-              <stop offset="0.687272" stop-color="#220D34" />
-            </linearGradient>
-            <linearGradient
-              id="paint1_linear_2_13"
-              x1="117.495"
-              y1="-48.6394"
-              x2="54.9894"
-              y2="92.9702"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#5A0445" />
-              <stop offset="1" stop-color="#3F0854" />
-            </linearGradient>
-            <linearGradient
-              id="paint2_linear_2_13"
-              x1="35.4584"
-              y1="-12"
-              x2="35.4584"
-              y2="66.5551"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#3F0854" />
-              <stop offset="1" stop-color="#77055B" />
-            </linearGradient>
-            <linearGradient
-              id="paint3_linear_2_13"
-              x1="231.422"
-              y1="-67.0443"
-              x2="214.769"
-              y2="72.5006"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#73055B" />
-              <stop offset="0.99" stop-color="#2C0438" />
-            </linearGradient>
-            <linearGradient
-              id="paint4_linear_2_13"
-              x1="39.4443"
-              y1="37.4279"
-              x2="50.9787"
-              y2="171.387"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#73055B" />
-              <stop offset="0.687272" stop-color="#220D34" />
-            </linearGradient>
-            <linearGradient
-              id="paint5_linear_2_13"
-              x1="106.865"
-              y1="-20.9275"
-              x2="99.0922"
-              y2="119.392"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0.01" stop-color="#430855" />
-              <stop offset="1" stop-color="#73055B" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-    </ng-container>
-    <ng-template #notAvailable>
-      <div class="w-full h-[165px] flex"></div>
-    </ng-template>
+        </g>
+        <defs>
+          <linearGradient
+            id="paint0_linear_2_13"
+            x1="33.0131"
+            y1="-66.9966"
+            x2="-10.9235"
+            y2="60.0771"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#73055B" />
+            <stop offset="0.687272" stop-color="#220D34" />
+          </linearGradient>
+          <linearGradient
+            id="paint1_linear_2_13"
+            x1="117.495"
+            y1="-48.6394"
+            x2="54.9894"
+            y2="92.9702"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#5A0445" />
+            <stop offset="1" stop-color="#3F0854" />
+          </linearGradient>
+          <linearGradient
+            id="paint2_linear_2_13"
+            x1="35.4584"
+            y1="-12"
+            x2="35.4584"
+            y2="66.5551"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#3F0854" />
+            <stop offset="1" stop-color="#77055B" />
+          </linearGradient>
+          <linearGradient
+            id="paint3_linear_2_13"
+            x1="231.422"
+            y1="-67.0443"
+            x2="214.769"
+            y2="72.5006"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#73055B" />
+            <stop offset="0.99" stop-color="#2C0438" />
+          </linearGradient>
+          <linearGradient
+            id="paint4_linear_2_13"
+            x1="39.4443"
+            y1="37.4279"
+            x2="50.9787"
+            y2="171.387"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#73055B" />
+            <stop offset="0.687272" stop-color="#220D34" />
+          </linearGradient>
+          <linearGradient
+            id="paint5_linear_2_13"
+            x1="106.865"
+            y1="-20.9275"
+            x2="99.0922"
+            y2="119.392"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0.01" stop-color="#430855" />
+            <stop offset="1" stop-color="#73055B" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    } @else {
+    <div class="w-full h-[165px] flex"></div>
+    }
   </ion-toolbar>
 </ion-header>
-<ng-container *ngIf="players && players.length >= 3">
-  <ion-button
-    *ngIf="buttonVisible"
-    class="my-4 fixed bottom-0 right-4 z-50"
-    (click)="onRandomizePlayers()"
-    shape="round"
-    color="tertiary"
-    @fadeIn
-  >
-    <span class="flex mr-2 text-yellow-950">Sortear</span>
-    <ion-icon
-      class="animate-ball w-7 h-7 text-yellow-950"
-      name="football"
-    ></ion-icon
-  ></ion-button>
-</ng-container>
+
+@if(buttonVisible && players && players.length >= 3){
+<ion-button
+  class="my-4 fixed bottom-0 right-4 z-50"
+  (click)="onRandomizePlayers()"
+  shape="round"
+  color="tertiary"
+  @fadeIn
+>
+  <span class="flex mr-2 text-yellow-950">Sortear</span>
+  <ion-icon
+    class="animate-ball w-7 h-7 text-yellow-950"
+    name="football"
+  ></ion-icon
+></ion-button>
+} @defer(when isLoaded) {
 <ion-content
-  *ngIf="isLoaded"
   [fullscreen]="true"
   class="z-10"
   @fadeInFromRight
@@ -184,62 +184,61 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ng-container *ngIf="players && players.length > 0">
-    <div
-      class="w-5/6 mx-auto flex justify-between px-4 py-2 bg-dark bg-opacity-70 rounded-t-xl"
-    >
-      <h1 class="text-white text-lg font-bold">LISTA DE JOGADORES</h1>
-      <strong class="text-white text-lg font-bold">{{ players.length }}</strong>
-    </div>
-    <ion-list
-      class="w-5/6 mx-auto rounded-b-xl shadow-lg overflow-hidden animate-fade-in py-0"
-    >
-      <ion-item
-        lines="none"
-        [ngClass]="(i % 2 == 0) ? 'odd' : 'even'"
-        *ngFor="let player of players; trackBy: trackById; let i = index"
+  @if(players && players.length > 0){
+  <div
+    class="w-5/6 mx-auto flex justify-between px-4 py-2 bg-dark bg-opacity-70 rounded-t-xl"
+  >
+    <h1 class="text-white text-lg font-bold">LISTA DE JOGADORES</h1>
+    <strong class="text-white text-lg font-bold">{{ players.length }}</strong>
+  </div>
+  <ion-list
+    class="w-5/6 mx-auto rounded-b-xl shadow-lg overflow-hidden animate-fade-in py-0"
+  >
+    @for(player of players; track player.id; let i = $index) {
+    <ion-item lines="none" [ngClass]="(i % 2 == 0) ? 'odd' : 'even'">
+      <ion-thumbnail
+        class="flex items-center justify-center"
+        [ngClass]="{'p-5': player?.thumbnail === 'juventus'}"
       >
-        <ion-thumbnail
-          class="flex items-center justify-center"
-          [ngClass]="{'p-5': player?.thumbnail === 'juventus'}"
+        <img
+          [alt]="player?.name"
+          [src]="'assets/shield/'+ player?.thumbnail + '.svg' "
+        />
+      </ion-thumbnail>
+      <ion-label>
+        <h2 class="text-sm w-32 whitespace-nowrap overflow-hidden">
+          {{ player?.name }}
+        </h2>
+      </ion-label>
+      <ion-buttons slot="end" class="w-[100px] flex justify-end pr-3 gap-2">
+        <ion-button
+          (click)="onEdit(player)"
+          shape="round"
+          class="w-[35px] h-[35px] flex bg-dark-blue rounded-full px-1.5 text-orange-400"
         >
-          <img
-            [alt]="player?.name"
-            [src]="'assets/shield/'+ player?.thumbnail + '.svg' "
-          />
-        </ion-thumbnail>
-        <ion-label>
-          <h2 class="text-sm w-32 whitespace-nowrap overflow-hidden">
-            {{ player?.name }}
-          </h2>
-        </ion-label>
-        <ion-buttons slot="end" class="w-[100px] flex justify-end pr-3 gap-2">
-          <ion-button
-            (click)="onEdit(player)"
-            shape="round"
-            class="w-[35px] h-[35px] flex bg-dark-blue rounded-full px-1.5 text-orange-400"
-          >
-            <svg viewBox="0 0 24 24" class="w-8 h-8 flex">
-              <path
-                d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"
-                fill="#fb923c"
-              />
-            </svg>
-          </ion-button>
-          <ion-button
-            (click)="onDelete(player)"
-            shape="round"
-            class="w-[35px] h-[35px] flex bg-dark-blue rounded-full px-1.5 text-orange-400"
-          >
-            <svg viewBox="0 0 24 24" class="w-8 h-8 flex">
-              <path
-                d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z"
-                fill="#f87171"
-              />
-            </svg>
-          </ion-button>
-        </ion-buttons>
-      </ion-item>
-    </ion-list>
-  </ng-container>
+          <svg viewBox="0 0 24 24" class="w-8 h-8 flex">
+            <path
+              d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"
+              fill="#fb923c"
+            />
+          </svg>
+        </ion-button>
+        <ion-button
+          (click)="onDelete(player)"
+          shape="round"
+          class="w-[35px] h-[35px] flex bg-dark-blue rounded-full px-1.5 text-orange-400"
+        >
+          <svg viewBox="0 0 24 24" class="w-8 h-8 flex">
+            <path
+              d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z"
+              fill="#f87171"
+            />
+          </svg>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+    }
+  </ion-list>
+  }
 </ion-content>
+}

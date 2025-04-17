@@ -70,7 +70,7 @@ export class ModalComponent implements OnInit {
   @Output() listPlayersEmitter = new EventEmitter();
   @Output() singlePlayerEmitter = new EventEmitter();
 
-  @Input() player!: any;
+  @Input() player!: Player | undefined;
   @Input() players: Player[] = [];
   @Input() greetings?: {
     formTitle?: string;
@@ -107,6 +107,7 @@ export class ModalComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log('changes', changes);
     if (this.player?.id !== undefined) {
       this.populateFormData(this.player);
       this.openModal('');
@@ -217,6 +218,10 @@ export class ModalComponent implements OnInit {
   }
 
   updatePlayer(payload: Partial<Player>) {
+    if (!this.player) {
+      return;
+    }
+
     this.teamsService
       .updatePlayer(this.player.id, payload)
       .subscribe((updated) => {
@@ -235,6 +240,7 @@ export class ModalComponent implements OnInit {
       this.players = this.players.map((p) =>
         p.id === updatedPlayer.id ? updatedPlayer : p
       );
+
       this.listPlayersEmitter.emit(this.players);
     }
 
